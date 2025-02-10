@@ -1,2 +1,13 @@
 # Brevo
-PowerShell CmdLets for Brevo API
+
+PowerShell functions for Brevo API
+
+## Make it yours
+
+---
+Generated with Plaster and the SampleModule template
+
+
+This is a sample Readme
+
+## Make it yours
