@@ -8,7 +8,7 @@ function New-Contact {
 
         [Parameter(Mandatory = $true, HelpMessage = "The ID of the contact list to which the contact is added")]
         [int[]]$ListId,
-        [Parameter(Mandatory = $true, HelpMessage = 'Pass the set of attributes and their values. The attribute's parameter should be passed in capital letter while creating a contact. Values that don't match the attribute type (e.g. text or string in a date attribute) will be ignored. These attributes must be present in your Brevo account. For e.g. -Attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Pass the set of attributes and their values. The attributes parameter should be passed in capital letter while creating a contact. Values that dont match the attribute type (e.g. text or string in a date attribute) will be ignored. These attributes must be present in your Brevo account. For e.g. -Attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}')]
         #TODO: How to provide the attriutes?
         # docu: {"FNAME":"Elly", "LNAME":"Roger", "COUNTRIES":["India","China"]}
         $attributes
@@ -18,7 +18,7 @@ function New-Contact {
     
     $body = @{
         listId = $ListId
-        email = $Email
+        email  = $Email
     }
     if ($ext_id) {
         $body.ext_id = $ext_id

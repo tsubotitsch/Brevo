@@ -1,13 +1,21 @@
 # Changelog for Brevo
 
-The format is based on and uses the types of changes according to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+
+## [0.0.1]
 
 ### Added
 
-- For new features.
+- function Connect-Brevo
+- function Get-ContactAttribute
+- function Get-ContactFolder
+- function Get-ContactList
+- function Invoke-BrevoCall
+- function New-Contact
+- function New-ContactAttribute
+- function New-ContactFolder
+- function New-ContactList
+- function Update-Contact
 
 ### Changed
 
@@ -28,4 +36,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - In case of vulnerabilities.
-
