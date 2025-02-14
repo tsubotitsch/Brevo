@@ -42,6 +42,7 @@ Type category is only available if the category is category attribute")]
         "URI"    = $uri
         "Method" = $method
         "Body"   = $body
+        "returnobject" = "attributes"
     }
     $attribute = Invoke-BrevoCall @Params
     return $attribute

@@ -11,12 +11,16 @@ function Connect-Brevo {
     $script:APIuri = $apiuri
     $script:APIkey = $APIkey
 
-    Write-Debug "API URI: $script:APIuri"
+    Write-Debug "$($MyInvocation.MyCommand):API URI: $script:APIuri"
     #Write-Debug "API Key: $($script:APIkey.GetNetworkCredential().Password)"
-    $uri = "/account"
-    $method = "GET"
-    $masterAccount = Invoke-BrevoCall -uri $uri
-    if ($masterAccount) {
+    
+    $params = @{
+        "URI"    = "$script:APIuri/account"
+        "Method" = "GET"
+    } 
+
+    $Account = Invoke-BrevoCall @params
+    if ($Account) {
         Write-Host -ForegroundColor Green "Connected to Brevo API"
     }
     else {

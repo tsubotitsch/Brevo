@@ -8,6 +8,12 @@ function Get-ContactList {
 
     $uri = "/contacts/lists"
     $method = "GET"
-    $list = Invoke-BrevoCall -uri $uri -method $method
+    $params = @{
+        "URI"    = $uri
+        "Method" = $method
+        "returnobject" = "lists"
+    }
+
+    $list = Invoke-BrevoCall @params
     return $list
 }

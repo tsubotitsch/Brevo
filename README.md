@@ -2,6 +2,8 @@
 
 PowerShell functions for Brevo API
 
+See [Brevo API documentation](https://developers.brevo.com/reference/getting-started-1)
+
 ## Functions
 - Connect-Brevo
 - Get-ContactAttribute
@@ -70,3 +72,6 @@ New-ContactList -Name "MyList" -FolderId $ContactFolder.id
 ```powershell
 
 ```
+
+# Todo
+- Add missing function to module

@@ -13,6 +13,7 @@ function New-ContactFolder {
         "URI"    = $uri
         "Method" = $method
         "Body"   = $body
+        "returnobject" = "folders"
     }
     $folder = Invoke-BrevoCall @Params
     return $folder

@@ -17,6 +17,7 @@ function New-ContactList {
         "URI"    = $uri
         "Method" = $method
         "Body"   = $body
+        "returnobject" = "lists"
     }
     $list = Invoke-BrevoCall @Params
     return $list
