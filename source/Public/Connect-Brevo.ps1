@@ -1,4 +1,35 @@
+
 function Connect-Brevo {
+    <#
+    .SYNOPSIS
+    Connects to the Brevo API using the provided API key and URI.
+
+    .DESCRIPTION
+    The Connect-Brevo function authenticates to the Brevo API using the provided API key and optional API URI. 
+    It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
+
+    .PARAMETER APIkey
+    The API key to use for authentication. This parameter is mandatory.
+
+    .PARAMETER APIuri
+    The complete URI of the Brevo API. This parameter is optional and defaults to "https://api.brevo.com/v3".
+
+    .EXAMPLE
+    PS> $apiKey = Get-Credential
+    PS> Connect-Brevo -APIkey $apiKey
+
+    .Connects to the Brevo API using the provided API key and the default API URI.
+
+    .EXAMPLE
+    PS> $apiKey = Get-Credential
+    PS> Connect-Brevo -APIkey $apiKey -APIuri "https://custom.api.brevo.com/v3"
+
+    .Connects to the Brevo API using the provided API key and a custom API URI.
+
+    .OUTPUTS
+    Returns the account information from the Brevo API if the connection is successful.
+
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The API key to use for authentication.")]

@@ -1,4 +1,48 @@
+
 function Get-EmailCampain {
+    <#
+    .SYNOPSIS
+    Retrieves email campaigns based on specified filters.
+
+    .DESCRIPTION
+    The Get-EmailCampain function retrieves email campaigns from the Brevo API based on various optional filters such as type, status, statistics, date range, and more.
+
+    .PARAMETER type
+    Filter on the type of the campaigns. Valid values are "classic" and "trigger".
+
+    .PARAMETER status
+    Filter on the status of the campaign. Valid values are "suspended", "archive", "sent", "queued", "draft", and "inProgress".
+
+    .PARAMETER statistics
+    Filter on the type of statistics required. Valid values are "globalStats", "linkStats", and "statsByDomain". This option only returns data for events occurred in the last 6 months.
+
+    .PARAMETER startDate
+    Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result. Only available if either 'status' is not passed or if passed is set to 'sent'.
+
+    .PARAMETER endDate
+    Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result. Only available if either 'status' is not passed or if passed is set to 'sent'.
+
+    .PARAMETER limit
+    Number of documents per page. Defaults to 50. Valid range is 0 to 100.
+
+    .PARAMETER offset
+    Index of the first document in the page. Defaults to 0.
+
+    .PARAMETER sort
+    Sort the results in the ascending/descending order of record creation. Default order is descending if sort is not passed.
+
+    .PARAMETER excludeHtmlContent
+    Use this flag to exclude htmlContent from the response body. If set to true, htmlContent field will be returned as an empty string in the response body.
+
+    .EXAMPLE
+    Get-EmailCampain -type "classic" -status "sent" -startDate "2023-01-01T00:00:00.000Z" -endDate "2023-01-31T23:59:59.999Z"
+
+    .EXAMPLE
+    Get-EmailCampain -statistics "globalStats" -limit 10 -offset 0 -sort "asc"
+
+    .OUTPUTS
+    Returns the email campaigns that match the specified filters.
+    #>
     [CmdletBinding()]   
     param(
         [Parameter(Mandatory = $false, HelpMessage = "Filter on the type of the campaigns")]

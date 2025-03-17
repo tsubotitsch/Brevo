@@ -5,17 +5,20 @@ PowerShell functions for Brevo API
 See [Brevo API documentation](https://developers.brevo.com/reference/getting-started-1)
 
 ## Functions
-- Connect-Brevo
-- Get-ContactAttribute
-- Get-ContactFolder
-- Get-ContactList
-- New-Contact
-- New-ContactAttribute
-- New-ContactFolder
-- New-ContactList
-- Update-Contact
 
-- Invoke-BrevoCall
+| General          | Contact Management   | Marketing           | Account and Settings |
+| ---------------- | -------------------- | ------------------- | -------------------- |
+| Connect-Brevo    | Get-Contact          | Get-EmailCampain    | Get-User             |
+| Invoke-BrevoCall | Get-ContactAttribute | Remove-EmailCampain | Get-UserPermission   |
+|                  | Get-ContactFolder    | Send-EmailCampain   | Send-UserInvitation  |
+|                  | Get-ContactList      |                     |                      |
+|                  | Import-Contact       |                     |                      |
+|                  | New-Contact          |                     |                      |
+|                  | New-ContactAttribute |                     |                      |
+|                  | New-ContactFolder    |                     |                      |
+|                  | New-ContactList      |                     |                      |
+|                  | Remove-Contact       |                     |                      |
+|                  | Update-Contact       |                     |                      |
 
 ## How to start?
 
@@ -37,19 +40,22 @@ $apikey = Import-Clixml -Path ".\Brevo-APIkey.local.xml"
 Connect-Brevo -APIkey $apikey
 ```
 
-# Retieving data
+# Retrieving data
 
 ## List all attributes
+
 ```powershell
 Get-ContactAttributes
 ```
 
 ## List all contact folders
+
 ```powershell
 Get-ContactFolder | Format-Table
 ```
 
 ## List all contact lists
+
 ```powershell
 Get-ContactList | Format-Table
 ```
@@ -57,21 +63,24 @@ Get-ContactList | Format-Table
 # Creating data
 
 ## Create a contact folder
+
 ```powershell
 New-ContactFolder -Name "MyFolder01"
 ```
 
-
-
 ## Create a contact list
+
 ```powershell
 $ContactFolder = Get-ContactFolder | Where-Object { $_.name -eq "MyFolder01" }
 New-ContactList -Name "MyList" -FolderId $ContactFolder.id
 ```
+
 ## Create a contact attribute
+
 ```powershell
 
 ```
 
 # Todo
-- Add missing function to module
+
+- Add missing functions to module

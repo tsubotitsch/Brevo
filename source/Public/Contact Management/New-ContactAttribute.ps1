@@ -1,4 +1,45 @@
+
 function New-ContactAttribute {
+    <#
+    .SYNOPSIS
+    Creates a new contact attribute in Brevo.
+
+    .DESCRIPTION
+    The New-ContactAttribute function creates a new contact attribute in Brevo with the specified category, name, and other optional parameters.
+
+    .PARAMETER attributeCategory
+    Specifies the category of the attribute. Valid values are "normal", "transactional", "category", "calculated", and "global". This parameter is mandatory.
+
+    .PARAMETER attributeName
+    Specifies the name of the attribute. This parameter is mandatory.
+
+    .PARAMETER value
+    Specifies the value of the attribute. Use only if the attribute's category is 'calculated' or 'global'. This parameter is optional.
+
+    .PARAMETER isRecurring
+    Specifies whether the attribute is recurring. Use only if the attribute's category is 'calculated' or 'global'. This parameter is optional.
+
+    .PARAMETER enumeration
+    Specifies a list of values and labels that the attribute can take. Use only if the attribute's category is 'category'. This parameter is optional.
+
+    .PARAMETER multiCategoryOptions
+    Specifies a list of options you want to add for a multiple-choice attribute. Use only if the attribute's category is 'normal' and the attribute's type is 'multiple-choice'. This parameter is optional.
+
+    .PARAMETER type
+    Specifies the type of the attribute. Valid values are "text", "date", "float", "boolean", "multiple-choice", "id", and "category". The default value is "text". This parameter is optional.
+
+    .OUTPUTS
+    Returns the created attribute object.
+
+    .EXAMPLE
+    PS C:\> New-ContactAttribute -attributeCategory "normal" -attributeName "FirstName" -type "text"
+    Creates a new contact attribute with the category "normal", name "FirstName", and type "text".
+
+    .EXAMPLE
+    PS C:\> New-ContactAttribute -attributeCategory "category" -attributeName "Status" -enumeration @{"Active"="1"; "Inactive"="0"}
+    Creates a new contact attribute with the category "category", name "Status", and an enumeration of values.
+
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "Category of the attribute")]
