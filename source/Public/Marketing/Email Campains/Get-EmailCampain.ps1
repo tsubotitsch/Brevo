@@ -85,7 +85,7 @@ function Get-EmailCampain {
         "URI"          = $uri
         "Method"       = "GET"
         "Body"         = $body
-        "returnobject" = "campaigns"
+        # "returnobject" = "campaigns"
     }
     $emailCampain = Invoke-BrevoCall @Params
     return $emailCampain

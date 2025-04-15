@@ -21,7 +21,8 @@ function Get-User {
     $uri = "/user"
     $params = @{   
         "URI"    = "/organization/invited/users"
-        "Method" = "GET"    
+        "Method" = "GET"
+        "returnobject" = "users"
     }
     $user = Invoke-BrevoCall @params
     return $user

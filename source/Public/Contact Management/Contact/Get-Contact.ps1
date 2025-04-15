@@ -46,7 +46,6 @@ function Get-Contact {
     $Params = @{
         "URI"          = $uri
         "Method"       = $method
-        "returnobject" = "contacts"
     }
     $contact = Invoke-BrevoCall @Params
     return $contact

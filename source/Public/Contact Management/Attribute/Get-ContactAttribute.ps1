@@ -28,6 +28,6 @@ function Get-ContactAttribute {
         "Method"       = $method
         "returnobject" = "attributes"
     }
-    $attributes = Invoke-BrevoCall @Params
-    return $attributes
+    $attribute = Invoke-BrevoCall @Params
+    return $attribute
 }

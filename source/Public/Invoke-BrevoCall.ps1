@@ -99,7 +99,15 @@ function Invoke-BrevoCall {
             Wait-Debugger
         } while (($loop -eq $true) -and ($offset -lt $content.Count))
         
-        return $result
+        # return $result
+        if ($returnobject) {
+            Write-Debug "Returnobject: $returnobject"
+            return $result.$returnobject
+        }
+        else {
+            Write-Debug "No returnobject specified"
+            return $result
+        }
     }
     catch {
         $e = Get-Error -Newest 1
