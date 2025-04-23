@@ -29,7 +29,7 @@ function Remove-Domain {
     $body = @{
         name = $name
     }
-    if ($PSCmdlet.ShouldProcess("$script:graphQLApiUrl")) {
+    if ($PSCmdlet.ShouldProcess("$name", "Remove-Domain")) {
         $Domain = Invoke-BrevoCall @params
         return $Domain
     }

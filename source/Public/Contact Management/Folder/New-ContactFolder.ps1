@@ -31,8 +31,11 @@ function New-ContactFolder {
         "URI"    = $uri
         "Method" = $method
         "Body"   = $body
-        "returnobject" = "folders"
+        # "returnobject" = "folders"
     }
     $folder = Invoke-BrevoCall @Params
+    if ($folder -and ($folder.id -ne $null)) {
+        $folder = Get-ContactFolder -folderId $folder.id
+    }
     return $folder
 }

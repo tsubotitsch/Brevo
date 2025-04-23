@@ -40,6 +40,18 @@ function New-ContactList {
         "Body"   = $body
         "returnobject" = "lists"
     }
-    $list = Invoke-BrevoCall @Params
-    return $list
+
+    try {
+        Invoke-BrevoCall @Params
+        $params = @{
+            Name = $Name
+        }
+        if ($null -ne $FolderId) {
+            $params.FolderId = $FolderId
+        }
+        $list = Get-ContactList @params
+    }
+    catch {
+    }
+    return $list    
 }

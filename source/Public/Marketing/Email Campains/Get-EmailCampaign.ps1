@@ -1,11 +1,17 @@
 
-function Get-EmailCampain {
+function Get-EmailCampaign {
     <#
     .SYNOPSIS
     Retrieves email campaigns based on specified filters.
 
     .DESCRIPTION
-    The Get-EmailCampain function retrieves email campaigns from the Brevo API based on various optional filters such as type, status, statistics, date range, and more.
+    The Get-EmailCampaign function retrieves email campaigns from the Brevo API based on various optional filters such as type, status, statistics, date range, and more.
+
+    .PARAMETER id
+    The ID(s) of the specific campaign to retrieve. If not specified, all campaigns are retrieved.
+
+    .PARAMETER name
+    The name(s) of the specific campaign to retrieve. If not specified, all campaigns are retrieved.
 
     .PARAMETER type
     Filter on the type of the campaigns. Valid values are "classic" and "trigger".
@@ -35,16 +41,20 @@ function Get-EmailCampain {
     Use this flag to exclude htmlContent from the response body. If set to true, htmlContent field will be returned as an empty string in the response body.
 
     .EXAMPLE
-    Get-EmailCampain -type "classic" -status "sent" -startDate "2023-01-01T00:00:00.000Z" -endDate "2023-01-31T23:59:59.999Z"
+    Get-EmailCampaign -type "classic" -status "sent" -startDate "2023-01-01T00:00:00.000Z" -endDate "2023-01-31T23:59:59.999Z"
 
     .EXAMPLE
-    Get-EmailCampain -statistics "globalStats" -limit 10 -offset 0 -sort "asc"
+    Get-EmailCampaign -statistics "globalStats" -limit 10 -offset 0 -sort "asc"
 
     .OUTPUTS
     Returns the email campaigns that match the specified filters.
     #>
     [CmdletBinding()]   
     param(
+        [Parameter(Mandatory = $false, HelpMessage = "The Id(s) of the campaign")]
+        [int[]]$id,
+        [Parameter(Mandatory = $false, HelpMessage = "The name(s) of the campaign")]
+        [string[]]$name,
         [Parameter(Mandatory = $false, HelpMessage = "Filter on the type of the campaigns")]
         [ValidateSet("classic", "trigger")]
         [string]$type,
@@ -82,11 +92,17 @@ function Get-EmailCampain {
     $excludeHtmlContent ? ($body.excludeHtmlContent = $excludeHtmlContent) : $null
 
     $Params = @{
-        "URI"          = $uri
-        "Method"       = "GET"
-        "Body"         = $body
+        "URI"    = $uri
+        "Method" = "GET"
+        "Body"   = $body
         # "returnobject" = "campaigns"
     }
-    $emailCampain = Invoke-BrevoCall @Params
-    return $emailCampain
+    $emailCampaign = Invoke-BrevoCall @Params
+    if ($id) {
+        $emailCampaign = $emailCampaign | Where-Object { $id -contains $_.id }
+    }
+    if ($name) {
+        $emailCampaign = $emailCampaign | Where-Object { $name -contains $_.name }
+    }
+    return $emailCampaign
 }

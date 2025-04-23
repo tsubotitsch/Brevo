@@ -85,6 +85,11 @@ Type category is only available if the category is category attribute")]
         "Body"   = $body
         "returnobject" = "attributes"
     }
-    $attribute = Invoke-BrevoCall @Params
+    try {
+        $attribute = Invoke-BrevoCall @Params
+        $attribute = Get-ContactAttribute -Name $attributeName
+    }
+    catch {
+    }
     return $attribute
 }

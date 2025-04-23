@@ -6,21 +6,30 @@ See [Brevo API documentation](https://developers.brevo.com/reference/getting-sta
 
 ## Functions
 
-| General          | Contact Management   | Marketing           | Account and Settings |
-| ---------------- | -------------------- | ------------------- | -------------------- |
-| Connect-Brevo    | Get-Contact          | Get-EmailCampain    | Get-User             |
-| Invoke-BrevoCall | Get-ContactAttribute | Remove-EmailCampain | Get-UserPermission   |
-|                  | Get-ContactFolder    | Send-EmailCampain   | Send-UserInvitation  |
-|                  | Get-ContactList      |                     |                      |
-|                  | Import-Contact       |                     | Confirm-Domain       |
-|                  | New-Contact          |                     | Get-Domain           |
-|                  | New-ContactAttribute |                     | New-Domain           |
-|                  | New-ContactFolder    |                     | Remove-Domain        |
-|                  | New-ContactList      |                     | Test-Domain          |
-|                  | Remove-Contact       |                     |                      |
-|                  | Update-Contact       |                     | Get-Sender           |
-|                  |                      |                     | New-Sender           |
-|                  |                      |                     | Remove-Sender        |
+| General          | Contact Management    | Marketing           | Account and Settings |
+| ---------------- | --------------------- | ------------------- | -------------------- |
+| Connect-Brevo    | Add-ContactListMember | Get-EmailCampaign    | Get-User             |
+| Invoke-BrevoCall | Get-Contact           | Remove-EmailCampaign | Get-UserActivitylog  |
+|                  | Get-ContactAttribute  | Send-EmailCampaign   | Get-UserPermission  |
+|                  | Get-ContactFolder     |                     | Send-UserInvitation  |
+|                  | Get-ContactList       |                     |                      |
+|                  | Get-ContactListMember |                     | Confirm-Domain       |
+|                  | Get-ContactSegment    |                     | Get-Domain           |
+|                  | Import-Contact        |                     | New-Domain           |
+|                  | New-Contact           |                     | Remove-Domain        |
+|                  | New-ContactAttribute  |                     | Test-Domain          |
+|                  | New-ContactFolder     |                     |                      |
+|                  | Remove-Contact        |                     | Get-Sender           |
+|                  | Remove-ContactAttribute |                   | New-Sender           |
+|                  | Remove-ContactFolder  |                     | Remove-Sender        |
+|                  | Remove-ContactList    |                     |                      |
+|                  | Update-Contact        |                     | Get-Account          |
+|                  | Update-ContactList    |                     |                      |
+|                  |                       |                     |                      |
+|                  |                       |                     |                      |
+|                  |                       |                     | New-Domain           |
+|                  |                       |                     | Remove-Domain        |
+|                  |                       |                     | Test-Domain          |
 
 ## How to start?
 

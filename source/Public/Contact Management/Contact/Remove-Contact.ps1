@@ -24,7 +24,7 @@ function Remove-Contact {
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "Identifier is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)", Position = 0 )]
+        [Parameter(Mandatory = $true, HelpMessage = "Identifier is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)", Position = 0, ValueFromPipelineByPropertyName = $true )]
         [Alias ("Id")]
         [string]$Identifier
     )
@@ -34,7 +34,7 @@ function Remove-Contact {
         "URI"    = $uri
         "Method" = $method        
     }
-    if ($PSCmdlet.ShouldProcess("$script:graphQLApiUrl")) {
+    if ($PSCmdlet.ShouldProcess("$Identifier", "Remove-Contact")) {
         $contact = Invoke-BrevoCall @Params
         return $contact 
     }

@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [0.0.1]
+## [0.2]
 
 ### Added
 
@@ -17,7 +17,7 @@
 - function Get-ContactListMember
 - function Get-ContactSegment
 - function Get-Domain
-- function Get-EmailCampain
+- function Get-EmailCampaign
 - function Get-Sender
 - function Get-User
 - function Get-UserActivitylog
@@ -31,11 +31,13 @@
 - function New-Domain
 - function New-Sender
 - function Remove-Contact
+- function Remove-ContactAttribute
+- function Remove-ContactFolder
 - function Remove-ContactList
 - function Remove-Domain
-- function Remove-EmailCampain
+- function Remove-EmailCampaign
 - function Remove-Sender
-- function Send-EmailCampain
+- function Send-EmailCampaign
 - function Send-UserInvitation
 - function Test-Domain
 - function Update-Contact

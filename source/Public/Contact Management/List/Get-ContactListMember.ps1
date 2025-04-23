@@ -56,48 +56,27 @@ function Get-ContactListMember {
     $uri = "/contacts/lists/$listId/contacts"
     $method = "GET"
 
+    if ($limit -ne 0) {
+        $queryParams["limit"] = $limit
+    }
+    
+    if ($offset -ne 0) {
+        $queryParams["offset"] = $offset
+    }
+
+    if (-not [string]::IsNullOrEmpty($sort)) {
+        $queryParams["sort"] = $sort
+    }
+    
+    if ($queryParams.Count -gt 0) {
+        $queryString = ($queryParams.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join "&"
+        $uri = $uri + "?$queryString"
+    }
+
     $Params = @{
         "URI"    = $uri
         "Method" = $method
     }
-
-    if ($modifiedSince) {
-        if ($params["URI"] -like "*?*") {
-            # URI enthält bereits ein ?
-            $params["URI"] = $params["URI"] + "&modifiedSince=$($modifiedSince)"
-        } else {
-            # URI enthält noch kein ?
-            $params["URI"] = $params["URI"] + "?modifiedSince=$($modifiedSince)"
-        }
-    }
-    if ($limit) {
-        if ($params["URI"] -like "*?*") {
-            # URI enthält bereits ein ?
-            $params["URI"] = $params["URI"] + "&limit=$($limit)"
-        } else {
-            # URI enthält noch kein ?
-            $params["URI"] = $params["URI"] + "?limit=$($limit)"
-        }
-    }
-    if ($offset) {
-        if ($params["URI"] -like "*?*") {
-            # URI enthält bereits ein ?
-            $params["URI"] = $params["URI"] + "&offset=$($offset)"
-        } else {
-            # URI enthält noch kein ?
-            $params["URI"] = $params["URI"] + "?offset=$($offset)"
-        }
-    }
-    if ($sort) {
-        if ($params["URI"] -like "*?*") {
-            # URI enthält bereits ein ?
-            $params["URI"] = $params["URI"] + "&sort=$($sort)"
-        } else {
-            # URI enthält noch kein ?
-            $params["URI"] = $params["URI"] + "?sort=$($sort)"
-        }
-    }
-
     $contacts = Invoke-BrevoCall @Params
     return $contacts
 }

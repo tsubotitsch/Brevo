@@ -41,6 +41,21 @@ function Get-ContactSegment {
     $uri = "/contacts/segments"
     #$returnobject = "segments"
 
+    $queryParams = @{}
+
+    if ($null -ne $limit) {
+        $queryParams["limit"] = $limit
+    }
+    
+    if ($null -ne $offset) {
+        $queryParams["offset"] = $offset
+    }
+    
+    if ($queryParams.Count -gt 0) {
+        $queryString = ($queryParams.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join "&"
+        $uri = $uri + "?$queryString"
+    }
+
     $Params = @{
         "URI"          = $uri
         "Method"       = $method
