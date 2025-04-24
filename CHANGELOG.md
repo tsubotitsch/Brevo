@@ -2,8 +2,6 @@
 
 ## [Unreleased]
 
-## [0.2]
-
 ### Added
 
 - function Add-ContactListMember

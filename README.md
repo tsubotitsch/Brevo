@@ -1,6 +1,12 @@
-# Brevo
+# Brevo - A PowerShell module to automate your Brevo environment
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)
+![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)
+![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
+![GitHub Issues](https://img.shields.io/github/issues/tsubotitsch/Brevo?label=Issues)
 
-PowerShell functions for Brevo API
+[Brevo](https://www.brevo.com) is a versatile digital marketing platform that enables businesses to streamline customer communication through multiple channels, including email, SMS, and more.
+
+This PowerShell module contains functions to automate Brevo via the Brevo API
 
 See [Brevo API documentation](https://developers.brevo.com/reference/getting-started-1)
 

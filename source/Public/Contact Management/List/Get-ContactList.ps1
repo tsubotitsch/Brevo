@@ -47,6 +47,7 @@ function Get-ContactList {
     [CmdletBinding(DefaultParameterSetName = "None")]
     param (
         [Parameter(Mandatory = $false, HelpMessage = "The ID of the list", ParameterSetName = "ByListId")]
+        [Alias("Id")]
         [int]$listId,
         [Parameter(Mandatory = $false, HelpMessage = "The ID of the folder to retrieve lists from", ParameterSetName = "ByFolderId")]
         [int]$folderId,
@@ -109,5 +110,6 @@ function Get-ContactList {
     if (-not [string]::IsNullOrEmpty($listName)) {
         $list = $list | Where-Object { $_.name -eq $listName }
     }
+    #TODO: Count is wrong if $list is empty
     return $list
 }
