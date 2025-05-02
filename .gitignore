@@ -15,3 +15,6 @@ output/
 markdownissues.txt
 node_modules
 package-lock.json
+
+#local secret files
+*.xml

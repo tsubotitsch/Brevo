@@ -2,12 +2,15 @@
 ####################################################
 #          ModuleBuilder Configuration             #
 ####################################################
-
+# Path to the Module Manifest to build (where path will be resolved from)
+# SourcePath: ./Sampler/Sampler.psd1
+# Output Directory where ModuleBuilder will build the Module, relative to module manifest
+# OutputDirectory: ../output/Sampler
 BuiltModuleSubdirectory: module
 CopyPaths:
   - en-US
 #  - DSCResources
-  # - Modules
+# - Modules
 Encoding: UTF8
 # Can be used to manually specify module's semantic version if the preferred method of
 # using GitVersion is not available, and it is not possible to set the session environment
@@ -31,7 +34,7 @@ NestedModule:
 #    OutputDirectory: ///Modules/HelperSubmodule
 #    VersionedOutputDirectory: false
 #    AddToManifest: false
-#    SemVer: 
+#    SemVer:
 #    # suffix:
 #    # prefix:
 
@@ -40,7 +43,7 @@ NestedModule:
 ####################################################
 # Defining 'Workflows' (suite of InvokeBuild tasks) to be run using their alias
 BuildWorkflow:
-  '.': # "." is the default Invoke-Build workflow. It is called when no -Tasks is specified to the build.ps1
+  ".": # "." is the default Invoke-Build workflow. It is called when no -Tasks is specified to the build.ps1
     - build
     - test
 
@@ -49,13 +52,30 @@ BuildWorkflow:
     - Build_Module_ModuleBuilder
     - Build_NestedModules_ModuleBuilder
     - Create_changelog_release_output
+    # - Generate_Markdown_For_Public_Commands
+    - Generate_MAML_from_built_module
 
+  docs:
+    # The meta task Generate_Wiki_Content is not used so that Linux and macOS is supported
+    # - Generate_Conceptual_Help # Used for DSC resources
+    - Create_Wiki_Output_Folder
+    - Copy_Source_Wiki_Folder
+    # - Generate_Markdown_For_DSC_Resources # Used for DSC resources
+    - Generate_Markdown_For_Public_Commands
+    # - Generate_External_Help_File_For_Public_Commands
+    - Clean_Markdown_Of_Public_Commands
+    - Generate_Wiki_Sidebar
+    - Clean_Markdown_Metadata
+    - Package_Wiki_Content
 
   pack:
     - build
+    - docs
     - package_module_nupkg
 
-
+  release:
+    - pack
+    - publish
 
   # Defining test task to be run when invoking `./build.ps1 -Tasks test`
   test:
@@ -70,11 +90,11 @@ BuildWorkflow:
   # Use this task when you have multiple parallel tests, which produce multiple
   # code coverage files and needs to get merged into one file.
   #merge:
-    #- Merge_CodeCoverage_Files
+  #- Merge_CodeCoverage_Files
 
   publish:
-
-    - Publish_Release_To_GitHub # Runs first, if token is expired it will fail early
+    - Publish_GitHub_Wiki_Content # Runs first, if docs can't be generated, the release will fail
+    - Publish_Release_To_GitHub
     - publish_module_to_gallery
 
 ####################################################
@@ -114,9 +134,18 @@ Pester:
 # CodeCoverageMergedOutputFile - the file that is created by the merge build task and
 #                                is the file that should be uploaded to code coverage services.
 #CodeCoverage:
-  #CodeCoverageFilePattern: JaCoCo_Merge.xml # the pattern used to search all pipeline test job artifacts
-  #CodeCoverageMergedOutputFile: JaCoCo_coverage.xml # the file that is created for the merged code coverage
+#CodeCoverageFilePattern: JaCoCo_Merge.xml # the pattern used to search all pipeline test job artifacts
+#CodeCoverageMergedOutputFile: JaCoCo_coverage.xml # the file that is created for the merged code coverage
 
+DscTest:
+  ExcludeTag:
+    - "Common Tests - New Error-Level Script Analyzer Rules"
+  Tag:
+  ExcludeSourceFile:
+    - output
+  ExcludeModuleFile:
+    - Modules/DscResource.Common
+  #  - Templates
 
 # Import ModuleBuilder tasks from a specific PowerShell module using the build
 # task's alias. Wildcard * can be used to specify all tasks that has a similar
@@ -124,10 +153,11 @@ Pester:
 # module in the file RequiredModules.psd1.
 ModuleBuildTasks:
   Sampler:
-    - '*.build.Sampler.ib.tasks'
+    - "*.build.Sampler.ib.tasks"
   Sampler.GitHubTasks:
-    - '*.ib.tasks'
-
+    - "*.ib.tasks"
+  DSCResource.DocGenerator:
+    - "Task.*"
 
 # Invoke-Build Header to be used to 'decorate' the terminal output of the tasks.
 TaskHeader: |
@@ -141,8 +171,41 @@ TaskHeader: |
   Write-Build DarkGray "  $($Task.InvocationInfo.ScriptName):$($Task.InvocationInfo.ScriptLineNumber)"
   ""
 
+GitHubConfig:
+  GitHubFilesToAdd:
+    - "CHANGELOG.md"
+  ReleaseAssets:
+    - output/WikiContent.zip
+  GitHubConfigUserName: fasteiner
+  GitHubConfigUserEmail: fabian@stei-ner.net
+  UpdateChangelogOnPrerelease: false
 
-
-
-
-
+####################################################
+#      DscResource.DocGenerator Configuration      #
+####################################################
+DscResource.DocGenerator:
+  # Generate_Conceptual_Help:
+  #   MarkdownCodeRegularExpression:
+  #     - '\`(.+?)\`' # Match inline code-block
+  #     - '\\(\\)' # Match escaped backslash
+  #     - '\[[^\[]+\]\((.+?)\)' # Match markdown URL
+  #     - '_(.+?)_' # Match Italic (underscore)
+  #     - '\*\*(.+?)\*\*' # Match bold
+  #     - '\*(.+?)\*' # Match Italic (asterisk)
+  Publish_GitHub_Wiki_Content:
+    Debug: false
+  Generate_Wiki_Content:
+    Generate_Markdown_For_Public_Commands:
+      WithModulePage: true
+    # MofResourceMetadata:
+    #   Type: MofResource
+    #   Category: Resources
+    # ClassResourceMetadata:
+    #   Type: ClassResource
+    #   Category: Resources
+    # CompositeResourceMetadata:
+    #   Type: CompositeResource
+    #   Category: Resources
+  Generate_Wiki_Sidebar:
+    Debug: false
+    AlwaysOverwrite: true
