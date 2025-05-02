@@ -90,7 +90,7 @@ function New-Contact {
         "URI"          = $uri
         "Method"       = $method
         "Body"         = $body
-        "returnobject" = "contacts"
+        #"returnobject" = "contacts"
     }
     $contact = Invoke-BrevoCall @Params
     return $contact

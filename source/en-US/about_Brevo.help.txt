@@ -5,17 +5,18 @@ SHORT DESCRIPTION
     PowerShell functions for Brevo API
 
 LONG DESCRIPTION
-    PowerShell functions for Brevo API
+    Brevo - A PowerShell module to automate your Brevo environment
 
 EXAMPLES
-    PS C:\> {{ add examples here }}
+    PS C:\> $apikey = Get-credential -Message "Please enter your Brevo API key (username doesn't matter)"
+    PS C:\> Connect-Brevo -APIkey $apikey
 
 TROUBLESHOOTING NOTE:
     Look out on the Github repository for issues and new releases.
 
 SEE ALSO
-    - {{ Please add Project URI such as github }}}
+    - https://github.com/tsubotitsch/Brevo
 
 KEYWORDS
-    {{ Add comma separated keywords here }}
+    Brevo, API, PowerShell, Module
 

@@ -72,6 +72,8 @@ function Get-Contact {
     param (
         [Parameter(Mandatory = $false, HelpMessage = "ID is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)")]
         [string]$Id,
+        [Parameter(Mandatory = $false, HelpMessage = "Email address of the contact. This is mandatory if Id is not provided.")]
+        [string]$email,
         [Parameter(Mandatory = $false, HelpMessage = "0 to 50. Defaults to 10. Number of documents per page")]
         [int]$limit,
         [Parameter(Mandatory = $false, HelpMessage = "Number of documents per page. 0 to 50. Defaults to 10")]
@@ -90,14 +92,15 @@ function Get-Contact {
         [Parameter(Mandatory = $false, HelpMessage = 'Filter the contacts on the basis of attributes. Allowed operator: equals. For multiple-choice options, the filter will apply an AND condition between the options. For category attributes, the filter will work with both id and value. (e.g. filter=equals(FIRSTNAME,"Antoine"), filter=equals(B1, true), filter=equals(DOB, "1989-11-23"), filter=equals(GENDER, "1"), filter=equals(GENDER, "MALE"), filter=equals(COUNTRY,"USA, INDIA")')]
         [string]$filter
     )
-    $uri = "/contacts/$Id"
+
+    $uri = "/contacts/$([System.Web.HttpUtility]::UrlEncode($Id))"
     $method = "GET"
     $queryParams = @{}
 
     if ($limit -ne 0) {
         $queryParams["limit"] = $limit
     }
-    
+
     if ($offset -ne 0) {
         $queryParams["offset"] = $offset
     }

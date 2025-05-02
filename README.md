@@ -1,4 +1,5 @@
 # Brevo - A PowerShell module to automate your Brevo environment
+
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)
 ![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
@@ -15,8 +16,8 @@ See [Brevo API documentation](https://developers.brevo.com/reference/getting-sta
 | General          | Contact Management    | Marketing           | Account and Settings |
 | ---------------- | --------------------- | ------------------- | -------------------- |
 | Connect-Brevo    | Add-ContactListMember | Get-EmailCampaign    | Get-User             |
-| Invoke-BrevoCall | Get-Contact           | Remove-EmailCampaign | Get-UserActivitylog  |
-|                  | Get-ContactAttribute  | Send-EmailCampaign   | Get-UserPermission  |
+| Disconnect-Brevo | Get-Contact           | Remove-EmailCampaign | Get-UserActivitylog  |
+| Invoke-BrevoCall | Get-ContactAttribute  | Send-EmailCampaign   | Get-UserPermission  |
 |                  | Get-ContactFolder     |                     | Send-UserInvitation  |
 |                  | Get-ContactList       |                     |                      |
 |                  | Get-ContactListMember |                     | Confirm-Domain       |
@@ -31,8 +32,6 @@ See [Brevo API documentation](https://developers.brevo.com/reference/getting-sta
 |                  | Remove-ContactList    |                     |                      |
 |                  | Update-Contact        |                     | Get-Account          |
 |                  | Update-ContactList    |                     |                      |
-|                  |                       |                     |                      |
-|                  |                       |                     |                      |
 |                  |                       |                     | New-Domain           |
 |                  |                       |                     | Remove-Domain        |
 |                  |                       |                     | Test-Domain          |
@@ -54,7 +53,7 @@ Get-Command -Module Brevo
 
 ## 1st steps
 
-You have to have an API key first.
+You have to have an API key first. [Using your API key to authenticate](https://developers.brevo.com/docs/getting-started#using-your-api-key-to-authenticate)
 
 - Login to [Brevo.com](https://brevo.com) or register for free
 - Navigate to My Profile > SMTP & API > API-Key > [Generate ne API Key](https://app.brevo.com/settings/keys/api)

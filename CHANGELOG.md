@@ -7,6 +7,7 @@
 - function Add-ContactListMember
 - function Confirm-Domain
 - function Connect-Brevo
+- function Disconnect-Brevo
 - function Get-Account
 - function Get-Contact
 - function Get-ContactAttribute
