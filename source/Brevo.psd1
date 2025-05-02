@@ -95,16 +95,16 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags = @("Brevo", "API", "Contacts", "Email", "EmailCampain",  "Marketing")
 
             # A URL to the license for this module.
             LicenseUri   = 'https://opensource.org/licenses/MIT'
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            # ProjectUri = 'https://github.com/tsubotitsch/Brevo'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            # IconUri = 'https://github.com/tsubotitsch/Brevo/blob/main/Brevo-Powershell.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = ''
