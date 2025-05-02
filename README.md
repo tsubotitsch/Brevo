@@ -49,6 +49,9 @@ Import-Module Brevo
 
 # List all available cmdlets provided by the module
 Get-Command -Module Brevo
+
+# Disconnect from Brevo
+Disconnect-Brevo
 ```
 
 ## 1st steps

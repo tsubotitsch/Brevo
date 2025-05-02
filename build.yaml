@@ -63,9 +63,9 @@ BuildWorkflow:
     # - Generate_Markdown_For_DSC_Resources # Used for DSC resources
     - Generate_Markdown_For_Public_Commands
     # - Generate_External_Help_File_For_Public_Commands
-    - Clean_Markdown_Of_Public_Commands
+    #- Clean_Markdown_Of_Public_Commands
     - Generate_Wiki_Sidebar
-    - Clean_Markdown_Metadata
+    #- Clean_Markdown_Metadata
     - Package_Wiki_Content
 
   pack:
@@ -176,8 +176,8 @@ GitHubConfig:
     - "CHANGELOG.md"
   ReleaseAssets:
     - output/WikiContent.zip
-  GitHubConfigUserName: fasteiner
-  GitHubConfigUserEmail: fabian@stei-ner.net
+  GitHubConfigUserName: tsubotitsch
+  GitHubConfigUserEmail: git@subo.org
   UpdateChangelogOnPrerelease: false
 
 ####################################################
@@ -193,7 +193,7 @@ DscResource.DocGenerator:
   #     - '\*\*(.+?)\*\*' # Match bold
   #     - '\*(.+?)\*' # Match Italic (asterisk)
   Publish_GitHub_Wiki_Content:
-    Debug: false
+    Debug: true
   Generate_Wiki_Content:
     Generate_Markdown_For_Public_Commands:
       WithModulePage: true
