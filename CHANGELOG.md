@@ -5,6 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+## [0.3.4] - 2025.05-18
+
+- Fixed issue with wiki sidebar generation
+- Added download link to status icons at README.md
+
+## [0.3.3] - 2025.05-02
+
+- Fixed documentation
+
+## [0.3.2] - 2025.05-02
+
+- Fixed documentation
+
 ## [0.3.1] - 2025-05-02
 
 ### Added

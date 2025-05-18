@@ -18,13 +18,12 @@ function New-WikiSidebarFromPs1 {
         # Zuerst die .ps1-Dateien im aktuellen Verzeichnis
         $files = Get-ChildItem -Path $CurrentPath -Filter *.ps1 -File | Where-Object { $_.Name -notlike '*.local.*' } | Sort-Object Name
         foreach ($file in $files) {
-            $mdName = "$($file.BaseName).md"
-            $relPath = $mdName
+            $relPath = $($file.BaseName)
             if ($CurrentPath -ne $SourcePath) {
                 $relDir = $file.DirectoryName.Substring($SourcePath.Length).TrimStart('\', '/')
-                $relPath = "$relDir/$mdName" -replace '\\', '/'
+                $relPath = "$relDir/$($file.BaseName)" -replace '\\', '/'
             }
-            $sidebar += "$indent- [$($file.BaseName)]($mdName)`n"
+            $sidebar += "$indent- [$($file.BaseName)]($($file.BaseName))`n"
             # # .md-Datei anlegen, falls nicht vorhanden
             # $mdOutDir = Join-Path $WikiSourcePath ($file.DirectoryName.Substring($SourcePath.Length).TrimStart('\','/'))
             # if (-not (Test-Path $mdOutDir)) { New-Item -ItemType Directory -Path $mdOutDir -Force | Out-Null }
