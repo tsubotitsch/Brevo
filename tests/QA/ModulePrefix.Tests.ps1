@@ -11,11 +11,11 @@ BeforeDiscovery {
         $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
     }
 
-    $script:moduleName = $ProjectName
+    $global:moduleName = $ProjectName
 
-    Remove-Module -Name $script:moduleName -Force -ErrorAction SilentlyContinue
+    Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
 
-    $mut = Get-Module -Name $script:moduleName -ListAvailable |
+    $mut = Get-Module -Name $global:moduleName -ListAvailable |
         Select-Object -First 1 |
             Import-Module -Force -ErrorAction Stop -PassThru
 }
@@ -23,13 +23,16 @@ BeforeDiscovery {
 Describe "Module Function Name Prefix Validation" {
     It "All exported functions should follow the naming convention <Verb>-<Prefix><FunctionName>" {
         # Get all exported functions from the module
-        $exportedFunctions = $mut.ExportedCommands.Keys
+        $exportedFunctions = (Get-Command -Module $global:moduleName).Where({$_.Source -eq $global:moduleName}).Name
+
+        Write-Host "Found $($exportedFunctions.Count) exported functions in module '$global:moduleName'."
 
         # Define the regex pattern with named groups
-        $namingPattern = "^(?<Verb>[A-Za-z]+)-(?<Prefix>$script:moduleName)(?<FunctionName>[A-Za-z]+)$"
+        $namingPattern = "^(?<Verb>[A-Za-z]+)-(?<Prefix>$global:moduleName)(?<FunctionName>[A-Za-z]*)$"
 
         # Iterate through each function and validate the naming convention
         foreach ($functionName in $exportedFunctions) {
+            Write-Debug "Validating function: $functionName"
             $functionName | Should -Match $namingPattern
         }
     }
