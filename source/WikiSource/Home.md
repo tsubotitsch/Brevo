@@ -13,28 +13,28 @@ See [Brevo API documentation](https://developers.brevo.com/reference/getting-sta
 
 ## Functions
 
-| General          | Contact Management    | Marketing           | Account and Settings |
-| ---------------- | --------------------- | ------------------- | -------------------- |
-| Connect-Brevo    | Add-BrevoContactListMember | Get-BrevoEmailCampaign    | Get-BrevoUser             |
-| Disconnect-Brevo | Get-BrevoContact           | Remove-BrevoEmailCampaign | Get-BrevoUserActivitylog  |
-| Invoke-BrevoCall | Get-BrevoContactAttribute  | Send-BrevoEmailCampaign   | Get-BrevoUserPermission  |
-|                  | Get-BrevoContactFolder     |                     | Send-BrevoUserInvitation  |
-|                  | Get-BrevoContactList       |                     |                      |
-|                  | Get-BrevoContactListMember |                     | Confirm-BrevoDomain       |
-|                  | Get-BrevoContactSegment    |                     | Get-BrevoDomain           |
-|                  | Import-BrevoContact        |                     | New-BrevoDomain           |
-|                  | New-BrevoContact           |                     | Remove-BrevoDomain        |
-|                  | New-BrevoContactAttribute  |                     | Test-BrevoDomain          |
-|                  | New-BrevoContactFolder     |                     |                      |
-|                  | Remove-BrevoContact        |                     | Get-BrevoSender           |
-|                  | Remove-BrevoContactAttribute |                   | New-BrevoSender           |
-|                  | Remove-BrevoContactFolder  |                     | Remove-BrevoSender        |
-|                  | Remove-BrevoContactList    |                     |                      |
-|                  | Update-BrevoContact        |                     | Get-BrevoAccount          |
-|                  | Update-BrevoContactList    |                     |                      |
-|                  |                       |                     | New-BrevoDomain           |
-|                  |                       |                     | Remove-BrevoDomain        |
-|                  |                       |                     | Test-BrevoDomain          |
+| General          | Contact Management           | Marketing                 | Account and Settings     |
+| ---------------- | ---------------------------- | ------------------------- | ------------------------ |
+| Connect-Brevo    | Add-BrevoContactListMember   | Get-BrevoEmailCampaign    | Get-BrevoUser            |
+| Disconnect-Brevo | Get-BrevoContact             | Remove-BrevoEmailCampaign | Get-BrevoUserActivitylog |
+| Invoke-BrevoCall | Get-BrevoContactAttribute    | Send-BrevoEmailCampaign   | Get-BrevoUserPermission  |
+|                  | Get-BrevoContactFolder       |                           | Send-BrevoUserInvitation |
+|                  | Get-BrevoContactList         |                           |                          |
+|                  | Get-BrevoContactListMember   |                           | Confirm-BrevoDomain      |
+|                  | Get-BrevoContactSegment      |                           | Get-BrevoDomain          |
+|                  | Import-BrevoContact          |                           | New-BrevoDomain          |
+|                  | New-BrevoContact             |                           | Remove-BrevoDomain       |
+|                  | New-BrevoContactAttribute    |                           | Test-BrevoDomain         |
+|                  | New-BrevoContactFolder       |                           |                          |
+|                  | Remove-BrevoContact          |                           | Get-BrevoSender          |
+|                  | Remove-BrevoContactAttribute |                           | New-BrevoSender          |
+|                  | Remove-BrevoContactFolder    |                           | Remove-BrevoSender       |
+|                  | Remove-BrevoContactList      |                           |                          |
+|                  | Update-BrevoContact          |                           | Get-BrevoAccount         |
+|                  | Update-BrevoContactList      |                           |                          |
+|                  |                              |                           | New-BrevoDomain          |
+|                  |                              |                           | Remove-BrevoDomain       |
+|                  |                              |                           | Test-BrevoDomain         |
 
 ## How to start?
 
