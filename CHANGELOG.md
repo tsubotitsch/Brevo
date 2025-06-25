@@ -13,10 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`.vscode/profile.ps1`**: Added profile to auto-run mini build and import the module version.
 - **`tests/QA/ModulePrefix.Tests.ps1`**: Added tests to ensure the module prefix is consistent across all functions.
 - **`.gitignore`**: Added diff files to the gitignore file to prevent them from being committed.
+- **README.md**: Added documentation of IP Whitelisting and how to turn itt off, if needed.
 
 ### Changed
 
 - Added function prefix `Brevo-` to all functions for consistency.
+
+### Fixed
+
+- Fixed pipeline
+  - source/Public/Contact Management/Folder/Remove-BrevoContactFolder.ps1
+  - source/Public/Contact Management/Contact/Remove-BrevoContact.ps1
 
 
 ## [0.3.4] - 2025.05-18
