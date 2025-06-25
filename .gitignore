@@ -18,3 +18,7 @@ package-lock.json
 
 #local secret files
 *.xml
+
+# diff files
+*.diff
+diff*.txt

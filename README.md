@@ -15,26 +15,21 @@ See [Brevo API documentation](https://developers.brevo.com/reference/getting-sta
 
 | General          | Contact Management    | Marketing           | Account and Settings |
 | ---------------- | --------------------- | ------------------- | -------------------- |
-| Connect-Brevo    | Add-ContactListMember | Get-EmailCampaign    | Get-User             |
-| Disconnect-Brevo | Get-Contact           | Remove-EmailCampaign | Get-UserActivitylog  |
-| Invoke-BrevoCall | Get-ContactAttribute  | Send-EmailCampaign   | Get-UserPermission  |
-|                  | Get-ContactFolder     |                     | Send-UserInvitation  |
-|                  | Get-ContactList       |                     |                      |
-|                  | Get-ContactListMember |                     | Confirm-Domain       |
-|                  | Get-ContactSegment    |                     | Get-Domain           |
-|                  | Import-Contact        |                     | New-Domain           |
-|                  | New-Contact           |                     | Remove-Domain        |
-|                  | New-ContactAttribute  |                     | Test-Domain          |
-|                  | New-ContactFolder     |                     |                      |
-|                  | Remove-Contact        |                     | Get-Sender           |
-|                  | Remove-ContactAttribute |                   | New-Sender           |
-|                  | Remove-ContactFolder  |                     | Remove-Sender        |
-|                  | Remove-ContactList    |                     |                      |
-|                  | Update-Contact        |                     | Get-Account          |
-|                  | Update-ContactList    |                     |                      |
-|                  |                       |                     | New-Domain           |
-|                  |                       |                     | Remove-Domain        |
-|                  |                       |                     | Test-Domain          |
+| Connect-Brevo    | Add-BrevoContactListMember | Get-BrevoEmailCampaign    | Get-BrevoUser             |
+| Disconnect-Brevo | Get-BrevoContact           | Remove-BrevoEmailCampaign | Get-BrevoUserActivitylog  |
+| Invoke-BrevoCall | Get-BrevoContactAttribute  | Send-BrevoEmailCampaign   | Get-BrevoUserPermission  |
+|                  | Get-BrevoContactFolder     |                     | Send-BrevoUserInvitation  |
+|                  | Get-BrevoContactList       |                     |                      |
+|                  | Get-BrevoContactListMember |                     | Confirm-BrevoDomain       |
+|                  | Get-BrevoContactSegment    |                     | Get-BrevoDomain           |
+|                  | Import-BrevoContact        |                     | New-BrevoDomain           |
+|                  | New-BrevoContact           |                     | Remove-BrevoDomain        |
+|                  | Update-BrevoContact        |                     | Get-BrevoAccount          |
+|                  | Remove-BrevoContact        |                     | Get-BrevoSender           |
+|                  | New-BrevoContactList       |                     |                      |
+|                  |                       |                     | New-BrevoDomain           |
+|                  |                       |                     | Remove-BrevoDomain        |
+|                  |                       |                     | Test-BrevoDomain          |
 
 ## How to start?
 
@@ -77,19 +72,19 @@ Connect-Brevo -APIkey $apikey
 ### List all attributes
 
 ```powershell
-Get-ContactAttributes
+Get-BrevoContactAttributes
 ```
 
 ### List all contact folders
 
 ```powershell
-Get-ContactFolder | Format-Table
+Get-BrevoContactFolder | Format-Table
 ```
 
 ### List all contact lists
 
 ```powershell
-Get-ContactList | Format-Table
+Get-BrevoContactList | Format-Table
 ```
 
 ## Creating data
@@ -97,24 +92,24 @@ Get-ContactList | Format-Table
 ### Create a contact folder
 
 ```powershell
-New-ContactFolder -Name "MyFolder01"
+New-BrevoContactFolder -Name "MyFolder01"
 ```
 
 ### Create a contact list
 
 ```powershell
-$ContactFolder = Get-ContactFolder | Where-Object { $_.name -eq "MyFolder01" }
-New-ContactList -Name "MyList" -FolderId $ContactFolder.id
+$ContactFolder = Get-BrevoContactFolder | Where-Object { $_.name -eq "MyFolder01" }
+New-BrevoContactList -Name "MyList" -FolderId $ContactFolder.id
 ```
 
 ### Create a contact attribute
 
 ```powershell
-New-ContactAttribute -attributeCategory normal -type text -attributeName USERTYPE
+New-BrevoContactAttribute -attributeCategory normal -type text -attributeName USERTYPE
 ```
 
 ## Create a new contact
 
 ```powershell
-New-Contact -Email "test01@example.org" -attributes @{FNAME="Elly"; LNAME="Roger";COUNTRIES=@("India","China")} -listIds 22,355
+New-BrevoContact -Email "test01@example.org" -attributes @{FNAME="Elly"; LNAME="Roger";COUNTRIES=@("India","China")} -listIds 22,355
 ```

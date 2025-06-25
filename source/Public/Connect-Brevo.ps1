@@ -1,24 +1,24 @@
-<#
-.SYNOPSIS
-    Connects to the Brevo API using the provided API key and URI.
-
-.DESCRIPTION
-    The `Connect-Brevo` function authenticates to the Brevo API using the provided API key and optional API URI. 
-    It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
-
-.EXAMPLE
-    Connect-Brevo -APIkey (Get-Credential)
-
-    Connects to the Brevo API using the provided API key and the default API URI.
-
-.INPUTS
-    The function does not accept pipeline input.
-
-.OUTPUTS
-    Returns $null if the connection fails, or the account information if the connection is successful.
-    If the -NoWelcome switch is used, it returns $true if the connection is successful, otherwise $null.
-#>
 function Connect-Brevo {
+    <#
+    .SYNOPSIS
+        Connects to the Brevo API using the provided API key and URI.
+    
+    .DESCRIPTION
+        The `Connect-Brevo` function authenticates to the Brevo API using the provided API key and optional API URI. 
+        It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
+    
+    .EXAMPLE
+        Connect-Brevo -APIkey (Get-Credential)
+    
+        Connects to the Brevo API using the provided API key and the default API URI.
+    
+    .INPUTS
+        The function does not accept pipeline input.
+    
+    .OUTPUTS
+        Returns $null if the connection fails, or the account information if the connection is successful.
+        If the -NoWelcome switch is used, it returns $true if the connection is successful, otherwise $null.
+    #>
     [CmdletBinding()]
     [OutputType([object])]
     param (
@@ -37,22 +37,29 @@ function Connect-Brevo {
     Write-Debug "$($MyInvocation.MyCommand):API URI: $script:APIuri"
     
     $params = @{
-        "URI"    = "$script:APIuri/account"
-        "Method" = "GET"
+        "URI"       = "$script:APIuri/account"
+        "Method"    = "GET"
+        ErrorAction = "Stop"
     } 
 
-    $Account = Invoke-BrevoCall @params
-    if ($Account) {
-        Write-Host -ForegroundColor Green "Connected to Brevo API"
-        if ($NoWelcome) {
-            return $true
+    try {
+        $Account = Invoke-BrevoCall @params
+        if ($Account) {
+            Write-Host -ForegroundColor Green "Connected to Brevo API"
+            if ($NoWelcome) {
+                return $true
+            }
+            else {
+                return $Account
+            }
         }
         else {
-            return $Account
+            Write-Host -ForegroundColor Red "Failed to connect to Brevo API"
+            return $null
         }
     }
-    else {
-        Write-Host -ForegroundColor Red "Failed to connect to Brevo API"
+    catch {
+        Write-Error "An error occurred while connecting to the Brevo API: $_" -Category ConnectionError -RecommendedAction "Check your API key, URI and IP Whitelist. NOTE: The external IP of the machine running this script must be whitelisted in your Brevo account."
         return $null
     }
 }

@@ -1,121 +1,80 @@
 {
-    "git.ignoreWindowsGit27Warning": true,
-    "bracket-pair-colorizer-2.depreciation-notice": false,
-    "terminal.integrated.enableMultiLinePasteWarning": false,
-    "editor.inlineSuggest.enabled": true,
-    "files.autoSave": "afterDelay",
-    "files.defaultLanguage": "powershell",
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "powershell.codeFormatting.openBraceOnSameLine": false,
+    "powershell.codeFormatting.newLineAfterOpenBrace": true,
+    "powershell.codeFormatting.newLineAfterCloseBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+    "powershell.codeFormatting.whitespaceAroundOperator": true,
+    "powershell.codeFormatting.whitespaceAfterSeparator": true,
+    "powershell.codeFormatting.ignoreOneLineBlock": false,
+    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationAfterEveryPipeline",
+    "powershell.codeFormatting.preset": "Custom",
+    "powershell.codeFormatting.alignPropertyValuePairs": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.developer.bundledModulesPath": "${cwd}/output/RequiredModules",
+    "powershell.scriptAnalysis.settingsPath": ".vscode\\analyzersettings.psd1",
+    "powershell.scriptAnalysis.enable": true,
+    "files.trimTrailingWhitespace": false,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
     "files.associations": {
-        "*.ps1": "powershell"
+        "*.ps1xml": "xml"
+    },
+    "cSpell.words": [
+        "COMPANYNAME",
+        "ICONURI",
+        "LICENSEURI",
+        "PROJECTURI",
+        "RELEASENOTES",
+        "buildhelpers",
+        "endregion",
+        "gitversion",
+        "icontains",
+        "keepachangelog",
+        "notin",
+        "pscmdlet",
+        "steppable"
+    ],
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+        "files.encoding": "utf8"
     },
     "vsicons.associations.files": [
         {
-            "icon": "powershell_pester",
+            "icon": "pester",
             "extensions": [
-                "Tests.ps1"
+                "Tests.ps1",
+                "tests.ps1"
             ],
             "format": "svg"
         }
     ],
-    "todo-tree.tree.showCountsInTree": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.formatOnPaste": true,
-    "workbench.colorCustomizations": {
-        "editorBracketHighlight.foreground1": "#569CD6",
-        "editorBracketHighlight.foreground2": "#C586C0",
-        "editorBracketHighlight.foreground3": "#4EC9B0",
-        "editorBracketHighlight.foreground4": "#CE9178",
-        "editorBracketHighlight.foreground5": "#9de825",
-        "editorBracketHighlight.foreground6": "#b1a803",
-        "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000"
-    },
+    "liveshare.languages.allowGuestCommandControl": true,
+    "liveshare.allowGuestDebugControl": true,
     "workbench.iconTheme": "vscode-icons",
-    "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit"
+    "terminal.integrated.bracketedPasteMode": false,
+    "terminal.integrated.profiles.linux": {
+        "Brevo pwsh": {
+            "path": "pwsh",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& './.vscode/profile.ps1'"
+            ]
+        }
     },
-    "indentRainbow.colors": [
-        "rgba( 86,156,214,0.08)",
-        "rgba(197,134,192,0.08)",
-        "rgba( 78,201,176,0.08)",
-        "rgba(206,145,120,0.08)",
-        "rgba(157,232, 37,0.08)",
-        "rgba(177, 168, 3,0.08)"
-    ],
-    "editor.fontFamily": "Consolas NF, 'Courier New', monospace",
-    "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": true,
-    "powershell.codeFormatting.useCorrectCasing": true,
-    "settingsSync.ignoredExtensions": [
-        "ms-dotnettools.csharp"
-    ],
-    "powerHeader.autoInsert.enable": true,
-    "powerHeader.autoInsert.allow": "always",
-    "powershell.codeFormatting.autoCorrectAliases": true,
-    "[powershell]": {
-        "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+    "terminal.integrated.defaultProfile.linux": "Brevo pwsh",
+    "terminal.integrated.profiles.windows": {
+        "Brevo pwsh": {
+            "source": "PowerShell",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& './.vscode/profile.ps1'"
+            ]
+        }
     },
-    "[markdown]": {
-        "powerHeader.commentMode": "line",
-        "powerHeader.newLines": 1,
-        "powerHeader.template": "# Title\n Short Description \n",
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "todo-tree.general.tags": [
-        "BUG",
-        "HACK",
-        "FIXME",
-        "TODO",
-        "TEST"
-    ],
-    "todo-tree.highlights.customHighlight": {
-        "TEST": {
-            "icon": "checklist",
-            "type": "line",
-            "iconColour": "cyan"
-        },
-        "FIXME": {
-            "type": "tag-and-subTag",
-            "iconColour": "red"
-        },
-        "BUG": {
-            "type": "tag-and-subTag",
-            "iconColour": "orange"
-        },
-        "pester.autoRunOnSave": false,
-    },
-    "git.autofetch": true,
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "git.enableSmartCommit": true,
-    "git.confirmSync": false,
-    "git.blame.statusBarItem.enabled": true,
-    "powershell.pester.codeLens": false,
-    "explorer.confirmDragAndDrop": false,
-    "hediet.vscode-drawio.resizeImages": null,
-    "editor.minimap.enabled": false,
-    "liveshare.launcherClient": "visualStudioCode",
-    "todo-tree.general.statusBar": "current file",
-    "files.exclude": {
-        "**/.excalidraw": true,
-        "**/Modules/*": true
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "powerShellUniversal.connections": [],
-    "rainbow_csv.autodetect_separators": [
-        "TAB",
-        ";",
-        "|"
-    ],
-    "[xml]": {
-        "editor.defaultFormatter": "fabianlauer.vs-code-xml-format"
-    },
-    "editor.wordWrap": "on",
-    "chat.editing.alwaysSaveWithGeneratedChanges": true,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "redhat.telemetry.enabled": false,
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:gpt-4o"
+    "terminal.integrated.defaultProfile.windows": "Brevo pwsh"
 }
