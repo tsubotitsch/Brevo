@@ -21,15 +21,18 @@ function Remove-BrevoContactFolder {
 
     .EXAMPLE
     Remove-BrevoContactFolder -folderId "12345"
+    
     This command removes the contact folder with the ID "12345".
 
     .EXAMPLE
     "12345" | Remove-BrevoContactFolder
+
     This command removes the contact folder with the ID "12345" by passing the ID 
     through the pipeline.
 
     .EXAMPLE
     Get-BrevoContactFolder -folderId "12345" | Remove-BrevoContactFolder
+    
     This command retrieves the contact folder with the ID "12345" and then removes it.
 
     .NOTES
@@ -44,15 +47,17 @@ function Remove-BrevoContactFolder {
         [Parameter(Mandatory = $true, HelpMessage = "Id of the folder", Position = 0, ValueFromPipelineByPropertyName = $true )]
         [Alias ("Id")]
         [string]$folderId
-    )
-    $uri = "/contacts/folders/$folderId"
-    $method = "DELETE"
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method        
-    }
-    if ($PSCmdlet.ShouldProcess("$Identifier", "Remove-BrevoContactFolder")) {
-        $contact = Invoke-BrevoCall @Params
-        return $contact 
+    )    
+    process{
+        $uri = "/contacts/folders/$folderId"
+        $method = "DELETE"
+        $Params = @{
+            "URI"    = $uri
+            "Method" = $method        
+        }
+        if ($PSCmdlet.ShouldProcess("$Identifier", "Remove-BrevoContactFolder")) {
+            $contact = Invoke-BrevoCall @Params
+            Write-Information "Contact folder with ID '$folderId' has been removed." 
+        }
     }
 }

@@ -26,23 +26,28 @@ function Get-BrevoContactList {
     The sorting criteria for the retrieved contact lists.
 
     .EXAMPLE
-    # Retrieve all contact lists with default pagination
     Get-BrevoContactList
 
+    Retrieve all contact lists with default pagination
+
     .EXAMPLE
-    # Retrieve a specific contact list by its ID
     Get-BrevoContactList -listId 123
+    
+    Retrieve a specific contact list by its ID
 
     .EXAMPLE
-    # Retrieve contact lists from a specific folder
     Get-BrevoContactList -folderId 456
+    
+    Retrieve contact lists from a specific folder
 
     .EXAMPLE
-    # Retrieve contact lists with pagination
     Get-BrevoContactList -limit 20 -offset 10
+    
+    Retrieve contact lists with pagination
 
     .OUTPUTS
     Returns a list of contact lists or a specific contact list based on the provided parameters.
+    
     #>
     [CmdletBinding(DefaultParameterSetName = "None")]
     param (

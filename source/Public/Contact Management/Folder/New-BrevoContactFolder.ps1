@@ -12,6 +12,7 @@ function New-BrevoContactFolder {
 
     .EXAMPLE
     PS C:\> New-BrevoContactFolder -Name "MyNewFolder"
+    
     This command creates a new contact folder named "MyNewFolder".
 
     .OUTPUTS

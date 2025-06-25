@@ -21,11 +21,14 @@ function Get-BrevoContactSegment {
 
     .EXAMPLE
     Get-BrevoContactSegment -limit 20 -offset 0 -sort "asc"
+    
     Retrieves the first 20 contact segments sorted in ascending order.
 
     .EXAMPLE
     Get-BrevoContactSegment -limit 50 -offset 100
+
     Retrieves 50 contact segments starting from the 101st record, sorted in descending order.
+    
     #>
     [CmdletBinding()]
     param (

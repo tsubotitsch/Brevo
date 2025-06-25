@@ -1,24 +1,24 @@
-<#
-.SYNOPSIS
-    Connects to the Brevo API using the provided API key and URI.
-
-.DESCRIPTION
-    The `Connect-Brevo` function authenticates to the Brevo API using the provided API key and optional API URI. 
-    It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
-
-.EXAMPLE
-    Connect-Brevo -APIkey (Get-Credential)
-
-    Connects to the Brevo API using the provided API key and the default API URI.
-
-.INPUTS
-    The function does not accept pipeline input.
-
-.OUTPUTS
-    Returns $null if the connection fails, or the account information if the connection is successful.
-    If the -NoWelcome switch is used, it returns $true if the connection is successful, otherwise $null.
-#>
 function Connect-Brevo {
+    <#
+    .SYNOPSIS
+        Connects to the Brevo API using the provided API key and URI.
+    
+    .DESCRIPTION
+        The `Connect-Brevo` function authenticates to the Brevo API using the provided API key and optional API URI. 
+        It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
+    
+    .EXAMPLE
+        Connect-Brevo -APIkey (Get-Credential)
+    
+        Connects to the Brevo API using the provided API key and the default API URI.
+    
+    .INPUTS
+        The function does not accept pipeline input.
+    
+    .OUTPUTS
+        Returns $null if the connection fails, or the account information if the connection is successful.
+        If the -NoWelcome switch is used, it returns $true if the connection is successful, otherwise $null.
+    #>
     [CmdletBinding()]
     [OutputType([object])]
     param (

@@ -14,10 +14,12 @@ function New-BrevoContactList {
 
     .EXAMPLE
     $contactList = New-BrevoContactList -Name "My New List" -FolderId 123
+
     Creates a new contact list named "My New List" in the folder with ID 123.
 
     .OUTPUTS
     The created contact list object.
+    
     #>
     [CmdletBinding()]
     param (

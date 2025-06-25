@@ -42,8 +42,12 @@ function Get-BrevoEmailCampaign {
     .EXAMPLE
     Get-BrevoEmailCampaign -type "classic" -status "sent" -startDate "2023-01-01T00:00:00.000Z" -endDate "2023-01-31T23:59:59.999Z"
 
+    Retrieves all classic email campaigns that were sent in January 2023.
+
     .EXAMPLE
     Get-BrevoEmailCampaign -statistics "globalStats" -limit 10 -offset 0 -sort "asc"
+
+    Retrieves the first 10 email campaigns sorted in ascending order, including only global statistics.
 
     .OUTPUTS
     Returns the email campaigns that match the specified filters.

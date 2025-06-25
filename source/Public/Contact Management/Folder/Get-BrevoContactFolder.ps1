@@ -1,5 +1,46 @@
 function Get-BrevoContactFolder {
+    <#
+    .SYNOPSIS
+        Retrieves contact folder(s) from the Brevo API.
 
+    .DESCRIPTION
+        The Get-BrevoContactFolder function retrieves one or more contact folders from the Brevo API.
+        You can retrieve a specific folder by its ID, filter by folder name, or list folders with optional pagination and sorting.
+
+    .PARAMETER folderId
+        The ID of the folder to retrieve. If specified, retrieves a single folder by its ID.
+
+    .PARAMETER Name
+        The name of the folder to retrieve. If specified, filters the results to folders matching the given name.
+
+    .PARAMETER None
+        Reserved for future use. Currently has no effect.
+
+    .PARAMETER limit
+        The number of documents per page (0 to 50). Defaults to 10 if not specified.
+
+    .PARAMETER offset
+        The number of documents to skip before starting to collect the result set. Defaults to 0.
+
+    .PARAMETER sort
+        Sorts the results in ascending ("asc") or descending ("desc") order of record creation. The default order is "desc".
+
+    .EXAMPLE
+        Get-BrevoContactFolder -folderId 123
+
+        Retrieves the contact folder with ID 123.
+
+    .EXAMPLE
+        Get-BrevoContactFolder -limit 20 -offset 10 -sort asc
+
+        Retrieves a paginated list of contact folders, 20 per page, skipping the first 10, sorted in ascending order.
+
+    .EXAMPLE
+        Get-BrevoContactFolder -Name "Marketing"
+
+        Retrieves contact folders with the name "Marketing".
+
+    #>
     [CmdletBinding(DefaultParameterSetName = "None")]
     param (
         [Parameter(Mandatory = $false, HelpMessage = "The ID of the folder", ParameterSetName = "ByFolderId")]

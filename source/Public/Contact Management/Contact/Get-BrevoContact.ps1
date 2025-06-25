@@ -52,20 +52,19 @@ function Get-BrevoContact {
     - `filter=equals(COUNTRY,"USA, INDIA")`
 
     .EXAMPLE
-    # Retrieve a contact by ID
     Get-BrevoContact -Id "12345"
+    
+    Retrieve a contact by ID
 
     .EXAMPLE
-    # Retrieve contacts created since a specific date
     Get-BrevoContact -createdSince "2023-01-01"
+    
+    Retrieve contacts created since a specific date
 
     .EXAMPLE
-    # Retrieve contacts with a specific filter
     Get-BrevoContact -filter 'equals(FIRSTNAME,"John")'
-
-    .NOTES
-    This function constructs a query string based on the provided parameters and 
-    makes a GET request to the Brevo API using the Invoke-BrevoCall function.
+    
+    Retrieve contacts with a specific filter
 
     #>
     [CmdletBinding()]

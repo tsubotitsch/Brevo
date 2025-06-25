@@ -18,18 +18,16 @@ function Get-BrevoContactAttribute {
     Get-BrevoContactAttribute
 
     .EXAMPLE
-    # Retrieve a specific contact attribute by name
     Get-BrevoContactAttribute -Name "FirstName"
 
+    Retrieve a specific contact attribute by name
+
     .EXAMPLE
-    # Retrieve multiple contact attributes by names
     Get-BrevoContactAttribute -Name @("FirstName", "LastName")
     # or
     Get-BrevoContactAttribute -Name "FirstName", "LastName"
-
-    .NOTES
-    - This function requires the Invoke-BrevoCall helper function to be defined and accessible.
-    - The "returnobject" parameter in the API call is set to "attributes" to specify the desired data to be returned.
+    
+    # Retrieve multiple contact attributes by names
     #>
     
     [CmdletBinding()]

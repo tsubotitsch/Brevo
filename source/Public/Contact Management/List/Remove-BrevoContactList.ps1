@@ -12,7 +12,9 @@ function Remove-BrevoContactList {
 
     .EXAMPLE
     Remove-BrevoContactList -listId 12345
+
     This command deletes the contact list with the ID 12345.
+    
     #>
     [CmdletBinding()]
     param (

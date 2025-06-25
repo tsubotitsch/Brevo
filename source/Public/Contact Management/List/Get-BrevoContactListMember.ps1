@@ -31,7 +31,7 @@ function Get-BrevoContactListMember {
     This example retrieves up to 100 members of the contact list with ID 12345, modified after January 1, 2023, 
     starting from the first record, sorted in ascending order.
 
-    .RETURNS
+    .OUTPUTS
     Returns the list of contacts retrieved from the specified contact list.
 
     .NOTES

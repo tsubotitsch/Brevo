@@ -27,14 +27,16 @@ function Remove-BrevoContact {
         [Alias ("Id")]
         [string]$Identifier
     )
-    $uri = "/contacts/$Identifier"
-    $method = "DELETE"
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method        
-    }
-    if ($PSCmdlet.ShouldProcess("$Identifier", "Remove-BrevoContact")) {
-        $contact = Invoke-BrevoCall @Params
-        return $contact 
+    process{
+        $uri = "/contacts/$Identifier"
+        $method = "DELETE"
+        $Params = @{
+            "URI"    = $uri
+            "Method" = $method        
+        }
+        if ($PSCmdlet.ShouldProcess("$Identifier", "Remove-BrevoContact")) {
+            $contact = Invoke-BrevoCall @Params
+            return $contact 
+        }
     }
 }

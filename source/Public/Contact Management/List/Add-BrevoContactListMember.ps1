@@ -31,14 +31,19 @@ function Add-BrevoContactListMember {
     Returns the updated (success/failure) contact list object.
 
     .EXAMPLE
-    # Example 1: Add contacts to a list using email addresses
     Add-BrevoContactListMember -listId 123 -emails @("example1@example.com", "example2@example.com")
+    
+    Add contacts to a list using email addresses
 
-    # Example 2: Add contacts to a list using contact IDs
+    .EXAMPLE
     Add-BrevoContactListMember -listId 123 -ids @(101, 102, 103)
+    
+    Add contacts to a list using contact IDs
 
-    # Example 3: Add contacts to a list using external IDs
+    .EXAMPLE
     Add-BrevoContactListMember -listId 123 -extids @(201, 202, 203)
+    
+    Add contacts to a list using external IDs
 
     .NOTES
     - Ensure that you provide at least one of the parameters: emails, ids, or extids.

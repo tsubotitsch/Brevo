@@ -26,18 +26,20 @@ function New-BrevoContactAttribute {
 
     .PARAMETER type
     Specifies the type of the attribute. Valid values are "text", "date", "float", "boolean", "multiple-choice", "id", and "category". The default value is "text". This parameter is optional.
-
-    .OUTPUTS
-    Returns the created attribute object.
-
+    
     .EXAMPLE
     PS C:\> New-BrevoContactAttribute -attributeCategory "normal" -attributeName "FirstName" -type "text"
+    
     Creates a new contact attribute with the category "normal", name "FirstName", and type "text".
-
+    
     .EXAMPLE
     PS C:\> New-BrevoContactAttribute -attributeCategory "category" -attributeName "Status" -enumeration @{"Active"="1"; "Inactive"="0"}
+    
     Creates a new contact attribute with the category "category", name "Status", and an enumeration of values.
-
+    
+    .OUTPUTS
+    Returns the created attribute object.
+    
     #>
     [CmdletBinding()]
     param (

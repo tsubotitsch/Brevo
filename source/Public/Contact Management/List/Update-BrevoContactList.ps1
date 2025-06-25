@@ -20,12 +20,15 @@ function Update-BrevoContactList {
     If specified, the list will be moved to the specified folder.
 
     .EXAMPLE
-    # Update the name of a contact list with ID 123
     Update-BrevoContactList -listId 123 -Name "New List Name"
+    
+    Update the name of a contact list with ID 123
 
     .EXAMPLE
-    # Move a contact list with ID 456 to a folder with ID 789
     Update-BrevoContactList -listId 456 -folderid 789
+    
+    Move a contact list with ID 456 to a folder with ID 789
+    
     #>
     [CmdletBinding()]
     param (

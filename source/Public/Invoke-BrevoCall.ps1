@@ -1,5 +1,56 @@
+
 function Invoke-BrevoCall {
+    <#
+    .SYNOPSIS
+        Makes API calls to the Brevo API.
+    
+    .DESCRIPTION
+        This function is used to interact with the Brevo API by making RESTful API calls. 
+        It supports various HTTP methods, handles pagination, and allows for flexible API interactions.
+    
+    .PARAMETER uri
+        The relative URI of the API endpoint. This should be relative to the base URI provided in Connect-Brevo.
+    
+    .PARAMETER method
+        The HTTP method to use for the API call. Supported methods are GET, POST, PUT, DELETE, and PATCH.
+        Default: GET.
+    
+    .PARAMETER body
+        The request body for methods like POST or PUT. This should be a PowerShell object that will be converted to JSON.
+    
+    .PARAMETER limit
+        The number of results returned per page. The default and maximum value may vary per API.
+    
+    .PARAMETER offset
+        The index of the first document in the page (starting with 0). For example, if the limit is 50 and you want to retrieve page 2, set offset to 50.
+        Default: 0.
+    
+    .PARAMETER returnobject
+        Specifies a specific object to return from the API response. If not specified, the full response will be returned.
+    
+    .EXAMPLE
+        # Example: Retrieve a list of contacts with pagination
+        Invoke-BrevoCall -uri "/contacts" -method "GET" -limit 50 -offset 0
+    
+    .EXAMPLE
+        # Example: Create a new contact
+        $body = @{
+            email = "test@example.com"
+            attributes = @{
+                FNAME = "John"
+                LNAME = "Doe"
+            }
+            listIds = @(1, 2)
+        }
+        Invoke-BrevoCall -uri "/contacts" -method "POST" -body $body
+    
+    .NOTES
+        - Requires the Connect-Brevo function to be called first to set up the base URI and API key.
+        - Handles pagination automatically if the API response includes a "count" property.
+    
+    #>
     [CmdletBinding()]
+    [Alias("Invoke-BrevoApiCall", "Invoke-BrevoRestMethod")]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The URI of the API call. This should be the relative URI to the base URI provided in Connect-Brevo")]
         [string]$uri,

@@ -11,10 +11,12 @@ function Send-BrevoEmailCampaign {
 
     .EXAMPLE
     Send-BrevoEmailCampaign -campaignId "12345"
+    
     This example sends the email campaign with the ID "12345" immediately.
 
     .OUTPUTS
     Returns the email campaign object.
+    
     #>
     [CmdletBinding()]   
     param(
