@@ -1,9 +1,9 @@
 # Brevo - A PowerShell module to automate your Brevo environment
 
-![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)
-![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)]()
+[![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)]()
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
-![GitHub Issues](https://img.shields.io/github/issues/tsubotitsch/Brevo?label=Issues)
+[![GitHub Issues](https://img.shields.io/github/issues/tsubotitsch/Brevo?label=Issues)](https://github.com/tsubotitsch/Brevo/issues)
 
 [Brevo](https://www.brevo.com) is a versatile digital marketing platform that enables businesses to streamline customer communication through multiple channels, including email, SMS, and more.
 
@@ -44,6 +44,9 @@ Import-Module Brevo
 
 # List all available cmdlets provided by the module
 Get-Command -Module Brevo
+
+# Disconnect from Brevo
+Disconnect-Brevo
 ```
 
 ## 1st steps

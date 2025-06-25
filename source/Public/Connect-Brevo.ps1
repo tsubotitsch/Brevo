@@ -1,49 +1,40 @@
-
-function Connect-Brevo {
-    <#
-    .SYNOPSIS
+<#
+.SYNOPSIS
     Connects to the Brevo API using the provided API key and URI.
 
-    .DESCRIPTION
-    The Connect-Brevo function authenticates to the Brevo API using the provided API key and optional API URI. 
+.DESCRIPTION
+    The `Connect-Brevo` function authenticates to the Brevo API using the provided API key and optional API URI. 
     It sets the API URI and API key as script-scoped variables and attempts to connect to the Brevo API.
 
-    .PARAMETER APIkey
-    The API key to use for authentication. This parameter is mandatory.
+.EXAMPLE
+    Connect-Brevo -APIkey (Get-Credential)
 
-    .PARAMETER APIuri
-    The complete URI of the Brevo API. This parameter is optional and defaults to "https://api.brevo.com/v3".
+    Connects to the Brevo API using the provided API key and the default API URI.
 
-    .EXAMPLE
-    PS> $apiKey = Get-Credential
-    PS> Connect-Brevo -APIkey $apiKey
+.INPUTS
+    The function does not accept pipeline input.
 
-    .Connects to the Brevo API using the provided API key and the default API URI.
-
-    .EXAMPLE
-    PS> $apiKey = Get-Credential
-    PS> Connect-Brevo -APIkey $apiKey -APIuri "https://custom.api.brevo.com/v3"
-
-    .Connects to the Brevo API using the provided API key and a custom API URI.
-
-    .OUTPUTS
-    Returns the account information from the Brevo API if the connection is successful.
-
-    #>
+.OUTPUTS
+    Returns $null if the connection fails, or the account information if the connection is successful.
+    If the -NoWelcome switch is used, it returns $true if the connection is successful, otherwise $null.
+#>
+function Connect-Brevo {
     [CmdletBinding()]
+    [OutputType([object])]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The API key to use for authentication.")]
         [pscredential]$APIkey,
         [Parameter(Mandatory = $false, HelpMessage = "The complete URI of the Brevo API. e.g. https://api.brevo.com/v3/")]
         [Alias("uri", "apiurl")]
-        [string]$APIuri = "https://api.brevo.com/v3"
+        [string]$APIuri = "https://api.brevo.com/v3",
+        [Parameter(Mandatory = $false, HelpMessage = "Suppresses the welcome message.")]
+        [switch]$NoWelcome
     )
     
-    $script:APIuri = $apiuri
+    $script:APIuri = $APIuri
     $script:APIkey = $APIkey
 
     Write-Debug "$($MyInvocation.MyCommand):API URI: $script:APIuri"
-    #Write-Debug "API Key: $($script:APIkey.GetNetworkCredential().Password)"
     
     $params = @{
         "URI"       = "$script:APIuri/account"

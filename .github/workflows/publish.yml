@@ -31,6 +31,10 @@ jobs:
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
 
+      - name: Copy Markdown Files to WikiContent
+        run: |
+          cp -r ./output/docs/* ./output/WikiContent
+
       - name: Publish Module
         env:
           GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}

@@ -56,18 +56,18 @@
     "workbench.iconTheme": "vscode-icons",
     "terminal.integrated.bracketedPasteMode": false,
     "terminal.integrated.profiles.linux": {
-    "Notion pwsh": {
-        "path": "pwsh",
-        "args": [
-        "-NoExit",
-        "-Command",
-        "& './.vscode/profile.ps1'"
-        ]
-    }
+        "Brevo pwsh": {
+            "path": "pwsh",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& './.vscode/profile.ps1'"
+            ]
+        }
     },
-    "terminal.integrated.defaultProfile.linux": "Notion pwsh",
+    "terminal.integrated.defaultProfile.linux": "Brevo pwsh",
     "terminal.integrated.profiles.windows": {
-        "Notion pwsh": {
+        "Brevo pwsh": {
             "source": "PowerShell",
             "args": [
                 "-NoExit",
@@ -76,5 +76,5 @@
             ]
         }
     },
-    "terminal.integrated.defaultProfile.windows": "Notion pwsh"
+    "terminal.integrated.defaultProfile.windows": "Brevo pwsh"
 }

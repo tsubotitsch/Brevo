@@ -10,13 +10,18 @@ It also provides a confirmation message indicating the disconnection.
 Disconnect-Brevo
 
 This command disconnects the current session from the Brevo API and displays a confirmation message.
+
+.OUTPUTS
+True if the disconnection was successful, otherwise nothing.
 #>
 function Disconnect-Brevo {
 
     [CmdletBinding()]
+    [OutputType([bool])]
     param()
 
     $script:APIuri = $null
     $script:APIkey = $null
     Write-Host -ForegroundColor Green "Disconnected from Brevo API"
+    return $true
 }
