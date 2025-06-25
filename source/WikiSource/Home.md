@@ -58,6 +58,11 @@ You have to have an API key first. [Using your API key to authenticate](https://
 - Login to [Brevo.com](https://brevo.com) or register for free
 - Navigate to My Profile > SMTP & API > API-Key > [Generate ne API Key](https://app.brevo.com/settings/keys/api)
 - Copy the generated key for later use
+- Note: IPs have to be explicitly whitelisted in Brevo to allow API access. See [IP Whitelisting](https://developers.brevo.com/docs/how-it-works#brevo-ip-addresses), navigate to **Menu > SMTP & API > Authorized IPs** or click here to manage your IPs in Brevo: [Manage IPs](https://app.brevo.com/security/authorised_ips)
+  - Alternatively, you can turn off the IP restriction (if it regularly changes) and use the API key without IP restrictions - see the screenshot below<br>
+![Deactivate Blocking of unknown IPs - before deactivation](/assets/Brevo-IP-Whitelisting01.png)<br>
+After deactivation, you can use the API key without IP restrictions - see the screenshot below<br>
+![Deactivate Blocking of unknown IPs - after deactivation](/assets/Brevo-IP-Whitelisting02.png)
 
 ```powershell
 # Create Credentials
