@@ -1,0 +1,80 @@
+{
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "powershell.codeFormatting.openBraceOnSameLine": false,
+    "powershell.codeFormatting.newLineAfterOpenBrace": true,
+    "powershell.codeFormatting.newLineAfterCloseBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+    "powershell.codeFormatting.whitespaceAroundOperator": true,
+    "powershell.codeFormatting.whitespaceAfterSeparator": true,
+    "powershell.codeFormatting.ignoreOneLineBlock": false,
+    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationAfterEveryPipeline",
+    "powershell.codeFormatting.preset": "Custom",
+    "powershell.codeFormatting.alignPropertyValuePairs": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.developer.bundledModulesPath": "${cwd}/output/RequiredModules",
+    "powershell.scriptAnalysis.settingsPath": ".vscode\\analyzersettings.psd1",
+    "powershell.scriptAnalysis.enable": true,
+    "files.trimTrailingWhitespace": false,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        "*.ps1xml": "xml"
+    },
+    "cSpell.words": [
+        "COMPANYNAME",
+        "ICONURI",
+        "LICENSEURI",
+        "PROJECTURI",
+        "RELEASENOTES",
+        "buildhelpers",
+        "endregion",
+        "gitversion",
+        "icontains",
+        "keepachangelog",
+        "notin",
+        "pscmdlet",
+        "steppable"
+    ],
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false,
+        "files.encoding": "utf8"
+    },
+    "vsicons.associations.files": [
+        {
+            "icon": "pester",
+            "extensions": [
+                "Tests.ps1",
+                "tests.ps1"
+            ],
+            "format": "svg"
+        }
+    ],
+    "liveshare.languages.allowGuestCommandControl": true,
+    "liveshare.allowGuestDebugControl": true,
+    "workbench.iconTheme": "vscode-icons",
+    "terminal.integrated.bracketedPasteMode": false,
+    "terminal.integrated.profiles.linux": {
+    "Notion pwsh": {
+        "path": "pwsh",
+        "args": [
+        "-NoExit",
+        "-Command",
+        "& './.vscode/profile.ps1'"
+        ]
+    }
+    },
+    "terminal.integrated.defaultProfile.linux": "Notion pwsh",
+    "terminal.integrated.profiles.windows": {
+        "Notion pwsh": {
+            "source": "PowerShell",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& './.vscode/profile.ps1'"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Notion pwsh"
+}
