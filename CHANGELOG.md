@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+## [0.4.0] - 2025-06-25
+
 ### Added
 - **`.devcontainer/devcontainer.json`**: Introduced a development container configuration using the .NET SDK 9.0 with support for Zsh, GitVersion, and VS Code extensions.
 - **`.devcontainer/setup.ps1`**: Added setup script to install PowerShell tools, configure PATH for GitVersion, and bootstrap the module environment.
@@ -26,16 +28,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - source/Public/Contact Management/Contact/Remove-BrevoContact.ps1
 
 
-## [0.3.4] - 2025.05-18
+## [0.3.4] - 2025-05-18
 
 - Fixed issue with wiki sidebar generation
 - Added download link to status icons at README.md
 
-## [0.3.3] - 2025.05-02
+## [0.3.3] - 2025-05-02
 
 - Fixed documentation
 
-## [0.3.2] - 2025.05-02
+## [0.3.2] - 2025-05-02
 
 - Fixed documentation
 
