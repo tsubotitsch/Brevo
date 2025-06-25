@@ -46,15 +46,29 @@ function Connect-Brevo {
     #Write-Debug "API Key: $($script:APIkey.GetNetworkCredential().Password)"
     
     $params = @{
-        "URI"    = "$script:APIuri/account"
-        "Method" = "GET"
+        "URI"       = "$script:APIuri/account"
+        "Method"    = "GET"
+        ErrorAction = "Stop"
     } 
 
-    $Account = Invoke-BrevoCall @params
-    if ($Account) {
-        Write-Host -ForegroundColor Green "Connected to Brevo API"
+    try {
+        $Account = Invoke-BrevoCall @params
+        if ($Account) {
+            Write-Host -ForegroundColor Green "Connected to Brevo API"
+            if ($NoWelcome) {
+                return $true
+            }
+            else {
+                return $Account
+            }
+        }
+        else {
+            Write-Host -ForegroundColor Red "Failed to connect to Brevo API"
+            return $null
+        }
     }
-    else {
-        Write-Host -ForegroundColor Red "Failed to connect to Brevo API"
+    catch {
+        Write-Error "An error occurred while connecting to the Brevo API: $_" -Category ConnectionError -RecommendedAction "Check your API key, URI and IP Whitelist. NOTE: The external IP of the machine running this script must be whitelisted in your Brevo account."
+        return $null
     }
 }
