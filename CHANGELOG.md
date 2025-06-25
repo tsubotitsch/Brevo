@@ -3,7 +3,36 @@
 The format is based on and uses the types of changes according to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+### [Unreleased]
+
+### Added
+- **`.devcontainer/devcontainer.json`**: Introduced a development container configuration using the .NET SDK 9.0 with support for Zsh, GitVersion, and VS Code extensions.
+- **`.devcontainer/setup.ps1`**: Added setup script to install PowerShell tools, configure PATH for GitVersion, and bootstrap the module environment.
+- **`.github/dependabot.yml`**: Added Dependabot configuration for monitoring `devcontainers` ecosystem weekly.
+- **`.github/workflows/pr.yaml`**: Added GitHub Actions workflow for PR build and verification.
+- **`.vscode/profile.ps1`**: Added profile to auto-run mini build and import the module version.
+- **`tests/QA/ModulePrefix.Tests.ps1`**: Added tests to ensure the module prefix is consistent across all functions.
+- **`.gitignore`**: Added diff files to the gitignore file to prevent them from being committed.
+
+### Changed
+
+- Added function prefix `Brevo-` to all functions for consistency.
+
+
+## [0.3.4] - 2025.05-18
+
+- Fixed issue with wiki sidebar generation
+- Added download link to status icons at README.md
+
+## [0.3.3] - 2025.05-02
+
+- Fixed documentation
+
+## [0.3.2] - 2025.05-02
+
+- Fixed documentation
+
+## [0.3.1] - 2025-05-02
 
 ### Added
 
