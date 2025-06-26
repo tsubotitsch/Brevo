@@ -14,23 +14,27 @@ function Remove-BrevoDomain {
     Remove-BrevoDomain -name "example.com"
 
     This example removes the mail domain "example.com".
+
+    .EXAMPLE
+    @("example1.com", "example2.com") | Remove-BrevoDomain
+
+    This example demonstrates how to pass multiple domain names over the pipeline to remove them.
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "Mail domain name")]
+        [Parameter(Mandatory = $true, HelpMessage = "Mail domain name", ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
         [string] $name
     )
+    process{
+        $params = @{
+            "URI"    = "/senders/domains/$([uri]::EscapeDataString($name))"
+            "Method" = "DELETE"
+        } 
     
-    $params = @{
-        "URI"    = "/senders/domains/$([uri]::EscapeDataString($name))"
-        "Method" = "DELETE"
-    } 
-
-    $body = @{
-        name = $name
-    }
-    if ($PSCmdlet.ShouldProcess("$name", "Remove-BrevoDomain")) {
-        $Domain = Invoke-BrevoCall @params
-        return $Domain
+        if ($PSCmdlet.ShouldProcess("$name", "Remove-BrevoDomain")) {
+            $Domain = Invoke-BrevoCall @params
+            Write-Information "Removed domain: $name"
+            return $Domain
+        }
     }
 }

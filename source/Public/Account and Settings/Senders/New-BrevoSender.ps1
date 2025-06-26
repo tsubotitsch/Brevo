@@ -19,35 +19,63 @@ function New-BrevoSender {
     Returns the response from the Brevo API containing information about the created sender domain.
 
     .EXAMPLE
-    PS> New-BrevoSender -Email "
+    PS> New-BrevoSender -Email "example@domain.com" -Name "Example Sender"
+
+    This example demonstrates how to create a new sender with the email address "example@domain.com" and the name "Example Sender".
+
+    .EXAMPLE
+    PS> @{
+    Email = "example@domain.com"
+    Name = "Example Sender"
+    } | New-BrevoSender
+
+    This example demonstrates how to pass all parameters over the pipeline to create a new sender.
+
+    .EXAMPLE
+    PS> $ips = @(@{ip = "192.168.1.1"; domain = "example.com"; weight = 1})
+    PS> @{
+    Email = "example@domain.com"
+    Name = "Example Sender"
+    } | New-BrevoSender -ips $ips
+
+    This example demonstrates how to pass the 'ips' parameter as a regular parameter while passing the rest of the parameters over the pipeline to create a new sender.
+
+    .EXAMPLE
+    PS> @(
+    @{ Email = "example1@domain.com"; Name = "Example Sender 1" },
+    @{ Email = "example2@domain.com"; Name = "Example Sender 2" }
+    ) | New-BrevoSender
+
+    This example demonstrates how to pass multiple sender objects over the pipeline to create multiple senders.
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "The email address of the sender")]
+        [Parameter(Mandatory = $true, HelpMessage = "The email address of the sender", ValueFromPipelineByPropertyName = $true)]
         [string]$Email,
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the sender")]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the sender", ValueFromPipelineByPropertyName = $true)]
         [string]$Name,
-        [Parameter(Mandatory = $false, HelpMessage = "array of objects. Mandatory in case of dedicated IP. IPs to associate to the sender. For example: @(
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName = $true, HelpMessage = "array of objects. Mandatory in case of dedicated IP. IPs to associate to the sender. For example: @(
     @{ip = ""x.x.x.x""; domain = ""mydomain.com"";weight = 1})")]
         $ips
     )
-    $params = @{
-        "URI"          = "/senders"
-        "Method"       = "POST"
-    } 
-
-    $params["Body"] = @{
-        "email"       = $Email
-        "name"        = $Name
-    }
-    if ($ips) {
-        if ($ips -is [array]) {
-            $params["Body"]["ips"] = $ips
-        } else {
-            throw "The 'ips' parameter must be an array of objects."
+    process{
+        $params = @{
+            "URI"          = "/senders"
+            "Method"       = "POST"
+        } 
+        $params["Body"] = @{
+            "email"       = $Email
+            "name"        = $Name
         }
+        if ($ips) {
+            if ($ips -is [array]) {
+                $params["Body"]["ips"] = $ips
+            } else {
+                throw "The 'ips' parameter must be an array of objects."
+            }
+        }
+    
+        return Invoke-BrevoCall @params
     }
 
-    $Sender = Invoke-BrevoCall @params
-    return $Sender
 }

@@ -26,6 +26,5 @@ function Remove-BrevoSender {
         "Method"       = "DELETE"
     } 
 
-    $Sender = Invoke-BrevoCall @params
-    return $Sender
+    return Invoke-BrevoCall @params
 }

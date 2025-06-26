@@ -18,6 +18,10 @@ function Remove-BrevoContact {
     Remove-BrevoContact -Identifier "email@example.com"
     This command removes the contact with the email "email@example.com".
 
+    .EXAMPLE
+    @("435603", "8236489249") | Remove-BrevoContact
+    This example demonstrates how to pass multiple identifiers over the pipeline to remove contacts.
+
     .NOTES
     This function supports ShouldProcess for safety, and has a high confirm impact.
     #>

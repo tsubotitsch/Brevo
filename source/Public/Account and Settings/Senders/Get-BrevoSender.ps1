@@ -27,6 +27,5 @@ function Get-BrevoSender {
         "returnobject" = "senders"
     } 
 
-    $Sender = Invoke-BrevoCall @params
-    return $Sender
+    return Invoke-BrevoCall @params
 }

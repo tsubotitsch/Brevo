@@ -18,6 +18,16 @@ function Remove-BrevoContactAttribute {
 
     Removes the "FirstName" attribute from the "normal" category.
 
+    .EXAMPLE
+    @{ category = "transactional"; Name = "LastName" } | Remove-BrevoContactAttribute
+
+    This example demonstrates how to pass the parameters as a hashtable to remove the "LastName" attribute from the "transactional" category.
+
+    .EXAMPLE
+    @({ category = "category"; Name = "Status" }, @{ category = "global"; Name = "OptIn" }) | Remove-BrevoContactAttribute
+
+    This example shows how to remove multiple attributes by passing an array of hashtables, each containing the category and name of the attribute to be removed.
+
     .INPUTS
     None. You cannot pipe objects to this function.
 
@@ -42,7 +52,14 @@ function Remove-BrevoContactAttribute {
             "URI"    = $uri
             "Method" = $method
         }
-        Write-Host @Params
-        $attribute = Invoke-BrevoCall @Params
+        if($PSCmdlet.ShouldProcess("$Name", "Remove-BrevoContactAttribute")) {
+            Write-Verbose "Removing contact attribute: $Name from category: $Category"
+            # Invoke the API call to remove the contact attribute
+            # The Invoke-BrevoCall function is assumed to handle the API request
+            $attribute = Invoke-BrevoCall @Params
+            Write-Information "Removed contact attribute: $Name from category: $Category"
+            return $attribute
+        }
+
     }
 }
