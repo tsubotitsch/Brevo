@@ -35,6 +35,11 @@ function Remove-BrevoContactFolder {
     
     This command retrieves the contact folder with the ID "12345" and then removes it.
 
+    .EXAMPLE
+    @("Folder1", "Folder2") | Remove-BrevoContactFolder
+
+    This command removes multiple contact folders by passing their Names over the pipeline.
+
     .NOTES
     - This function supports ShouldProcess for safety, allowing you to confirm 
         the action before it is executed.

@@ -15,6 +15,9 @@ function New-BrevoContactFolder {
     
     This command creates a new contact folder named "MyNewFolder".
 
+    .EXAMPLE
+    @("Folder1", "Folder2") | New-BrevoContactFolder
+
     .OUTPUTS
     The function returns the created contact folder object.
     #>
@@ -23,20 +26,24 @@ function New-BrevoContactFolder {
         [Parameter(Mandatory = $true, HelpMessage = "The name of the contact folder")]
         [string]$Name
     )
-    $uri = "/contacts/folders"
-    $method = "POST"
-    $body = @{
-        name = $Name
+    begin{
+        $uri = "/contacts/folders"
+        $method = "POST"
     }
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method
-        "Body"   = $body
-        # "returnobject" = "folders"
+    process{
+        $body = @{
+            name = $Name
+        }
+        $Params = @{
+            "URI"    = $uri
+            "Method" = $method
+            "Body"   = $body
+            # "returnobject" = "folders"
+        }
+        $folder = Invoke-BrevoCall @Params
+        if ($folder -and ($folder.id -ne $null)) {
+            $folder = Get-BrevoContactFolder -folderId $folder.id
+        }
+        return $folder
     }
-    $folder = Invoke-BrevoCall @Params
-    if ($folder -and ($folder.id -ne $null)) {
-        $folder = Get-BrevoContactFolder -folderId $folder.id
-    }
-    return $folder
 }

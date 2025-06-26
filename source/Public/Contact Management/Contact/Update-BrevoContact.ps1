@@ -34,6 +34,14 @@ function Update-BrevoContact {
 
     This command updates the contact with the specified identifier, sets the email blacklisting status to true, adds the contact to lists with IDs 1, 2, and 3, and updates the contact's first name and last name.
 
+    .EXAMPLE
+    PS> @(
+    @{ Identifier = "contact_id1"; emailBlacklisted = $true; ListIds = @(1,2); attributes = @{"FIRSTNAME"="Alice"; "LASTNAME"="Smith"} },
+    @{ Identifier = "contact_id2"; smsBlacklisted = $true; unlinkListIds = @(3,4); attributes = @{"FIRSTNAME"="Bob"; "LASTNAME"="Brown"} }
+    ) | Update-BrevoContact
+
+    This example demonstrates updating multiple contacts by passing them over the pipeline.
+
     .OUTPUTS
     The function returns the updated contact object.
     
@@ -43,46 +51,49 @@ function Update-BrevoContact {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "Identifier is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)")]
+        [Parameter(Mandatory = $true, HelpMessage = "Identifier is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)", ValueFromPipelineByPropertyName = $true)]
         [Alias ("Id")]        
         [string]$Identifier,
-        [Parameter(Mandatory = $false, HelpMessage = "Pass your own Id to create a contact.")]
+        [Parameter(Mandatory = $false, HelpMessage = "Pass your own Id to create a contact.", ValueFromPipelineByPropertyName = $true)]
         [string]$ext_id,
-        [Parameter(Mandatory = $false, HelpMessage = "Set/unset this field to blacklist/allow the contact for emails")]
+        [Parameter(Mandatory = $false, HelpMessage = "Set/unset this field to blacklist/allow the contact for emails", ValueFromPipelineByPropertyName = $true)]
         [bool]$emailBlacklisted,
-        [Parameter(Mandatory = $false, HelpMessage = "Set/unset this field to blacklist/allow the contact for SMS")]
+        [Parameter(Mandatory = $false, HelpMessage = "Set/unset this field to blacklist/allow the contact for SMS", ValueFromPipelineByPropertyName = $true)]
         [bool]$smsBlacklisted,
-        [Parameter(Mandatory = $false, HelpMessage = "The IDs of the contact list to which the contact is added")]
+        [Parameter(Mandatory = $false, HelpMessage = "The IDs of the contact list to which the contact is added", ValueFromPipelineByPropertyName = $true)]
         [int[]]$ListIds,
-        [Parameter(Mandatory = $false, HelpMessage = "Ids of the lists to remove the contact from")]
+        [Parameter(Mandatory = $false, HelpMessage = "Ids of the lists to remove the contact from", ValueFromPipelineByPropertyName = $true)]
         [int[]]$unlinkListIds,
-        [Parameter(Mandatory = $false, HelpMessage = 'Pass the set of attributes and their values. The attributes parameter should be passed in capital letter while creating a contact. Values that dont match the attribute type (e.g. text or string in a date attribute) will )
-        be ignored. These attributes must be present in your Brevo account. For e.g. -Attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Pass the set of attributes and their values. The attributes parameter should be passed in capital letter while creating a contact. Values that dont match the attribute type (e.g. text or string in a date attribute) will be ignored. These attributes must be present in your Brevo account. For e.g. -Attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}', ValueFromPipelineByPropertyName = $true)]
         $attributes
     )
-    $uri = "/contacts/$Identifier"
-    $method = "PATCH"
-    $body = @{}
-    #$isRecurring ? ($body.isRecurring = $isRecurring) : $null
-    $ext_id ? ($body.ext_id = $ext_id) : $null
-    $emailBlacklisted ? ($body.emailBlacklisted = $emailBlacklisted) : $null
-    $smsBlacklisted ? ($body.smsBlacklisted = $smsBlacklisted) : $null
-    $ListIds ? ($body.listIds = $ListIds) : $null
-    $unlinkListIds ? ($body.unlinkListIds = $unlinkListIds) : $null
-
-    if ($attributes) {
-        $attrib = @{}
-        $attributes | ForEach-Object {
-            $attrib.Add($_.Key, $_.Value)
+    begin{
+        $method = "PATCH"
+    }
+    process{
+        $uri = "/contacts/$Identifier"
+        $body = @{}
+        #$isRecurring ? ($body.isRecurring = $isRecurring) : $null
+        $ext_id ? ($body.ext_id = $ext_id) : $null
+        $emailBlacklisted ? ($body.emailBlacklisted = $emailBlacklisted) : $null
+        $smsBlacklisted ? ($body.smsBlacklisted = $smsBlacklisted) : $null
+        $ListIds ? ($body.listIds = $ListIds) : $null
+        $unlinkListIds ? ($body.unlinkListIds = $unlinkListIds) : $null
+    
+        if ($attributes) {
+            $attrib = @{}
+            $attributes | ForEach-Object {
+                $attrib.Add($_.Key, $_.Value)
+            }
+            $body.attributes = $attrib
         }
-        $body.attributes = $attrib
+    
+        $Params = @{
+            "URI"    = $uri
+            "Method" = $method
+            "Body"   = $body
+        }
+        $contact = Invoke-BrevoCall @Params
+        return $contact
     }
-
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method
-        "Body"   = $body
-    }
-    $contact = Invoke-BrevoCall @Params
-    return $contact
 }
