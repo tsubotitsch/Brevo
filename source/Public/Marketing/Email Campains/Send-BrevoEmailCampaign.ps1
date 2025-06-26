@@ -14,20 +14,25 @@ function Send-BrevoEmailCampaign {
     
     This example sends the email campaign with the ID "12345" immediately.
 
+    .EXAMPLE
+    "12345" | Send-BrevoEmailCampaign
+
     .OUTPUTS
     Returns the email campaign object.
     
     #>
     [CmdletBinding()]   
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "ID of the campaign to be sent")]
+        [Parameter(Mandatory = $true, HelpMessage = "ID of the campaign to be sent", ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
         [string]$campaignId
     )
-    $uri = "https://api.sendinblue.com/v3/emailCampaigns/$campaignId/sendNow"   
-    $Params = @{
-        "URI"    = $uri
-        "Method" = "POST"
+    process{
+        $uri = "https://api.sendinblue.com/v3/emailCampaigns/$campaignId/sendNow"   
+        $Params = @{
+            "URI"    = $uri
+            "Method" = "POST"
+        }
+        $emailCampaign = Invoke-BrevoCall @Params
+        return $emailCampaign
     }
-    $emailCampaign = Invoke-BrevoCall @Params
-    return $emailCampaign
 }

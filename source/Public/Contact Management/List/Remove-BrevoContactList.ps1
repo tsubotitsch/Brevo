@@ -13,21 +13,31 @@ function Remove-BrevoContactList {
     .EXAMPLE
     Remove-BrevoContactList -listId 12345
 
+    .EXAMPLE
+    PS> @(12345, 67890) | Remove-BrevoContactList
+
+    This example demonstrates deleting multiple contact lists by passing their IDs through the pipeline.
+
     This command deletes the contact list with the ID 12345.
     
     #>
-    [CmdletBinding()]
+    [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess = $true)]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "The ID of the contact list to delete")]
+        [Parameter(Mandatory = $true, HelpMessage = "The ID of the contact list to delete", ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
         [int]$listId
     )
-    $uri = "/contacts/lists/$listId"
-    $method = "DELETE"
-    
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method
+    begin{
+        $method = "DELETE"
     }
-    $list = Invoke-BrevoCall @Params
-    return $list
+
+    process {
+        $uri = "/contacts/lists/$listId"
+
+        $Params = @{ "URI" = $uri; "Method" = $method }
+        if($PSCmdlet.ShouldProcess("$listId", "Remove-BrevoContactList")) {
+            $list = Invoke-BrevoCall @Params
+            Write-Information "Removed contact list with ID: $listId"
+            return $list
+        }
+    }
 }

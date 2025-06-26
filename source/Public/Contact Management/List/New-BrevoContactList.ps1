@@ -1,4 +1,5 @@
-function New-BrevoContactList {
+function New-BrevoContactList
+{
     <#
     .SYNOPSIS
     Creates a new contact list in Brevo.
@@ -23,36 +24,44 @@ function New-BrevoContactList {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "The name of the contact list")]
+        [Parameter(Mandatory = $true, HelpMessage = "The name of the contact list", ValueFromPipelineByPropertyName = $true)]
         [string]$Name,
-        [Parameter(Mandatory = $true, HelpMessage = "The ID of the folder in which the contact list is created")]
+        [Parameter(Mandatory = $true, HelpMessage = "The ID of the folder in which the contact list is created", ValueFromPipelineByPropertyName = $true)]
         $FolderId
     )
-    $uri = "/contacts/lists"
-    $method = "POST"
+    process
+    {
+        $uri = "/contacts/lists"
+        $method = "POST"
     
-    $body = @{
-        name = $Name
-        folderId = $FolderId
-    }
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method
-        "Body"   = $body
-        "returnobject" = "lists"
-    }
+        $body = @{
+            name     = $Name
+            folderId = $FolderId
+        }
+        $Params = @{
+            "URI"          = $uri
+            "Method"       = $method
+            "Body"         = $body
+            "returnobject" = "lists"
+        }
 
-    try {
-        Invoke-BrevoCall @Params
-        $params = @{
-            Name = $Name
+        try
+        {
+            Invoke-BrevoCall @Params
+            $params = @{
+                Name = $Name
+            }
+            if ($null -ne $FolderId)
+            {
+                $params.FolderId = $FolderId
+            }
+            $list = Get-BrevoContactList @params
         }
-        if ($null -ne $FolderId) {
-            $params.FolderId = $FolderId
+        catch
+        {
+            Write-Error "Failed to create contact list: $_" -Category OperationStopped -TargetObject $PSCmdlet
+            return
         }
-        $list = Get-BrevoContactList @params
-    }
-    catch {
-    }
-    return $list    
+        return $list  
+    }  
 }

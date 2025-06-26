@@ -14,6 +14,11 @@ function Remove-BrevoEmailCampaign {
     Remove-BrevoEmailCampaign -campaignId "12345"
     This command deletes the email campaign with the ID "12345".
 
+    .EXAMPLE
+    "12345" | Remove-BrevoEmailCampaign
+
+    This command deletes the email campaign with the ID "12345" by passing the ID through the pipeline.
+
     .OUTPUTS
     
     #>
@@ -23,15 +28,16 @@ function Remove-BrevoEmailCampaign {
         [Alias("Id")]
         [string]$campaignId
 
-        #TODO
     )
-    $uri = "/emailCampaigns/$id"   
-    $Params = @{
-        "URI"    = $uri
-        "Method" = "DELETE"
-    }
-    if ($PSCmdlet.ShouldProcess("$campaignId", "Remove-BrevoEmailCampaign")) {
-        $emailCampaign = Invoke-BrevoCall @Params
-        return $emailCampaign
+    process {
+        $uri = "/emailCampaigns/$campaignId"
+        $Params = @{
+            "URI"    = $uri
+            "Method" = "DELETE"
+        }
+        if ($PSCmdlet.ShouldProcess("$campaignId", "Remove-BrevoEmailCampaign")) {
+            $emailCampaign = Invoke-BrevoCall @Params
+            return $emailCampaign
+        }
     }
 }

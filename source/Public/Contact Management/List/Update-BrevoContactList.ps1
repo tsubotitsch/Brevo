@@ -1,4 +1,5 @@
-function Update-BrevoContactList {
+function Update-BrevoContactList
+{
     <#
     .SYNOPSIS
     Updates a contact list by modifying its name or moving it to a different folder.
@@ -20,44 +21,66 @@ function Update-BrevoContactList {
     If specified, the list will be moved to the specified folder.
 
     .EXAMPLE
-    Update-BrevoContactList -listId 123 -Name "New List Name"
-    
-    Update the name of a contact list with ID 123
+    PS> Update-BrevoContactList -listId 123 -Name "New List Name"
+
+    Update the name of a contact list with ID 123.
 
     .EXAMPLE
-    Update-BrevoContactList -listId 456 -folderid 789
-    
-    Move a contact list with ID 456 to a folder with ID 789
+    PS> @(
+    @{ listId = 123; Name = "Updated List 1" },
+    @{ listId = 456; folderid = 789 }
+    ) | Update-BrevoContactList
+
+    This example demonstrates updating multiple contact lists by passing their properties through the pipeline.
     
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "The ID of the contact list to update")]
+        [Parameter(Mandatory = $true, HelpMessage = "The ID of the contact list to update", ValueFromPipelineByPropertyName = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$listId,
 
-        [Parameter(Mandatory = $false, HelpMessage = "Name of the list. Either of the two parameters (name, folderId) can be updated at a time.")]
+        [Parameter(Mandatory = $false, HelpMessage = "Name of the list. Either of the two parameters (name, folderId) can be updated at a time.", ValueFromPipelineByPropertyName = $true)]
         [string]$Name,
 
-        [Parameter(Mandatory = $false, HelpMessage = "Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.")]
+        [Parameter(Mandatory = $false, HelpMessage = "Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.", ValueFromPipelineByPropertyName = $true)]
+        [ValidateRange(1, [int]::MaxValue)]
         [int]$folderid
     )
-    $uri = "/contacts/lists/$listId"
-    $method = "PUT"
-    
-    $body = @{}
-
-    if ($Name) {
-        $body.name = $Name
+    begin
+    {
+        $method = "PUT"
     }
-    if ($folderid) {
-        $body.folderId = $folderid
-    }
+    process
+    {
+        
+        $uri = "/contacts/lists/$listId"
+        
+        $body = @{}
 
-    $Params = @{
-        "URI"          = $uri
-        "Method"       = $method
-        "Body"         = $body
+        # if neither is specified, create a warning and exit
+        if ((-not $Name) -and (-not $folderid))
+        {
+            Write-Warning "At least one of the parameters (Name or folderId) must be specified to update the contact list."
+            return
         }
-    $list = Invoke-BrevoCall @Params
-    return $list
+    
+        if ($Name)
+        {
+            $body.name = $Name
+        }
+        if ($folderid)
+        {
+            $body.folderId = $folderid
+        }
+
+    
+        $Params = @{
+            "URI"    = $uri
+            "Method" = $method
+            "Body"   = $body
+        }
+        $list = Invoke-BrevoCall @Params
+        return $list
+    }
 }
