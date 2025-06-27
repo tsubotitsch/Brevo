@@ -5,6 +5,8 @@ on:
     branches:
       - main
       # - Dev
+    paths-ignore:
+      - '**/CHANGELOG.md' # Exclude changes to the changelog file
 
 defaults:
   run:
