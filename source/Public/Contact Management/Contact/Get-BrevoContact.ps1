@@ -1,4 +1,5 @@
-function Get-BrevoContact {
+function Get-BrevoContact
+{
     <#
     .SYNOPSIS
     Retrieves contact information from the Brevo API based on specified parameters.
@@ -67,11 +68,11 @@ function Get-BrevoContact {
     Retrieve contacts with a specific filter
 
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Id")]
     param (
-        [Parameter(Mandatory = $false, HelpMessage = "ID is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)")]
+        [Parameter(Mandatory = $false, HelpMessage = "ID is email_id (for EMAIL), phone_id (for SMS) or contact_id (for ID of the contact)", ParameterSetName = "Id")]
         [string]$Id,
-        [Parameter(Mandatory = $false, HelpMessage = "Email address of the contact. This is mandatory if Id is not provided.")]
+        [Parameter(Mandatory = $false, HelpMessage = "Email address of the contact. This is mandatory if Id is not provided.", ParameterSetName = "Email")]
         [string]$email,
         [Parameter(Mandatory = $false, HelpMessage = "0 to 50. Defaults to 10. Number of documents per page")]
         [int]$limit,
@@ -92,39 +93,59 @@ function Get-BrevoContact {
         [string]$filter
     )
 
-    $uri = "/contacts/$([System.Web.HttpUtility]::UrlEncode($Id))"
+    if ($PSCmdlet.ParameterSetName -eq "Id")
+    {
+        $uri = "/contacts/$Id"
+    }
+    elseif ($PSCmdlet.ParameterSetName -eq "Email")
+    {
+        $uri = "/contacts/$([System.Web.HttpUtility]::UrlEncode($Email))"
+    }
+    else
+    {
+        $uri = "/contacts"
+    }
+
     $method = "GET"
     $queryParams = @{}
 
-    if ($limit -ne 0) {
+    if ($limit -ne 0)
+    {
         $queryParams["limit"] = $limit
     }
 
-    if ($offset -ne 0) {
+    if ($offset -ne 0)
+    {
         $queryParams["offset"] = $offset
     }
 
-    if (-not [string]::IsNullOrEmpty($sort)) {
+    if (-not [string]::IsNullOrEmpty($sort))
+    {
         $queryParams["sort"] = $sort
     }
 
-    if ($null -ne $modifiedSince) {
+    if ($null -ne $modifiedSince)
+    {
         $queryParams["modifiedSince"] = [System.Web.HttpUtility]::UrlEncode((Get-Date $modifiedSince).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))
     }
 
-    if ($null -ne $createdSince) {
+    if ($null -ne $createdSince)
+    {
         $queryParams["createdSince"] = [System.Web.HttpUtility]::UrlEncode((Get-Date $createdSince).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))
     }
 
-    if ($segmentId -ne 0) {
+    if ($segmentId -ne 0)
+    {
         $queryParams["segmentId"] = $segmentId
     }
 
-    if ($listId -is [Array]) {
+    if ($listId -is [Array])
+    {
         $queryParams["listId"] = $listId -join ","
     }
     
-    if ($queryParams.Count -gt 0) {
+    if ($queryParams.Count -gt 0)
+    {
         $queryString = ($queryParams.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join "&"
         $uri = $uri + "?$queryString"
     }
