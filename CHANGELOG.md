@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **source\Public\Contact Management\Contact\Get-BrevoContact.ps1** Fixed Id/Email/none parameter
+- **source\Public\Invoke-BrevoCall.ps1** Fixed errorhandling for ErrorAction
 
 ## [0.4.0] - 2025-06-25
 

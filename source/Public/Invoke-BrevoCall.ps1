@@ -160,10 +160,7 @@ function Invoke-BrevoCall {
         }
     }
     catch {
-        throw $_.Exception.Message
-        # $e = Get-Error -Newest 1
-        # if ($e.TargetObject.Message) {
-        #     $e.TargetObject.Message | ConvertFrom-Json | Out-String | Write-Error
-        # }
+        # throw $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
 }
