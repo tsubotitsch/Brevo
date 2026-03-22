@@ -1,4 +1,5 @@
-function Update-BrevoContact {
+function Update-BrevoContact
+{
     <#
     .SYNOPSIS
     Updates a contact in Brevo.
@@ -34,8 +35,18 @@ function Update-BrevoContact {
 
     This command updates the contact with the specified identifier, sets the email blacklisting status to true, adds the contact to lists with IDs 1, 2, and 3, and updates the contact's first name and last name.
 
+    .EXAMPLE
+    PS> update-BrevoContact -id 94 -attributes @{CITIES = "Vienna" }
+
+    This command updates the contact with id 94 by setting the multi-choice attribute "CITIES" to "Vienna". (clears all other existing values of CITIES)
+
+    .EXAMPLE
+    PS> update-BrevoContact -id 94 -attributes @{CITIES = "Vienna" } -AddMultiChoiceOptions
+
+    This command updates the contact with id 94 by adding "Vienna" to the existing multi-choice attribute "CITIES".
+
     .OUTPUTS
-    The function returns the updated contact object.
+    none
     
     .LINK
     https://developers.brevo.com/reference/updatecontact
@@ -58,10 +69,12 @@ function Update-BrevoContact {
         [int[]]$unlinkListIds,
         [Parameter(Mandatory = $false, HelpMessage = 'Pass the set of attributes and their values. The attributes parameter should be passed in capital letter while creating a contact. Values that dont match the attribute type (e.g. text or string in a date attribute) will )
         be ignored. These attributes must be present in your Brevo account. For e.g. -Attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}')]
-        $attributes
+        $attributes,
+        [Parameter(Mandatory = $false, HelpMessage = "Options to add for a multiple-choice attribute. Use only if the attribute's category is 'normal'. Attention: multi-choice options must be available in Brevo before assigning them. If the parameter is not set, all values of the multi-choice attribute of the contact will be replaced.")]
+        [switch]$AddMultiChoiceOptions = $false
     )
     $uri = "/contacts/$Identifier"
-    $method = "PATCH"
+    $method = "PUT"
     $body = @{}
     #$isRecurring ? ($body.isRecurring = $isRecurring) : $null
     $ext_id ? ($body.ext_id = $ext_id) : $null
@@ -70,10 +83,41 @@ function Update-BrevoContact {
     $ListIds ? ($body.listIds = $ListIds) : $null
     $unlinkListIds ? ($body.unlinkListIds = $unlinkListIds) : $null
 
-    if ($attributes) {
+    $multiChoiceAttributes = Get-BrevoContactAttribute -Category normal -Type "multiple-choice" | Select-Object -ExpandProperty name
+    if ($attributes)
+    {
         $attrib = @{}
-        $attributes | ForEach-Object {
-            $attrib.Add($_.Key, $_.Value)
+        $attributes.GetEnumerator() | ForEach-Object {
+            if ($multiChoiceAttributes -contains $_.Key.ToUpper())
+            {
+                if ($AddMultiChoiceOptions)
+                {
+                    ############ Add options to existing multiple-choice attributes ##########
+                    $existingAttributes = (Get-BrevoContact -Id $Identifier).attributes
+                    #$attrib.Add($_.Key.toupper(), @{ "addOptions" = @($_.Value) })
+                    $newValue = @()
+                    $newValue += $existingAttributes.$($_.Key.toupper())
+                    $newValue += $_.Value
+                    $attrib.Add($_.Key.toupper(), $newValue)
+                }
+                else
+                {
+                    ############ Replace multiple-choice attributes ##########
+                    if ($_.Value -is [array])
+                    {
+                        ############ Ensure that multiple-choice attributes are passed as arrays ##########
+                        $attrib.Add($_.Key.toupper(), $_.Value)
+                    }
+                    else
+                    {
+                        $attrib.Add($_.Key.toupper(), @($_.Value))
+                    }
+                }
+            }
+            else
+            {
+                $attrib.Add($_.Key.toupper(), $_.Value)
+            }
         }
         $body.attributes = $attrib
     }
@@ -83,6 +127,7 @@ function Update-BrevoContact {
         "Method" = $method
         "Body"   = $body
     }
+
     $contact = Invoke-BrevoCall @Params
     return $contact
 }

@@ -6,10 +6,10 @@ function New-BrevoContactAttribute {
     .DESCRIPTION
     The New-BrevoContactAttribute function creates a new contact attribute in Brevo with the specified category, name, and other optional parameters.
 
-    .PARAMETER attributeCategory
+    .PARAMETER Category
     Specifies the category of the attribute. Valid values are "normal", "transactional", "category", "calculated", and "global". This parameter is mandatory.
 
-    .PARAMETER attributeName
+    .PARAMETER Name
     Specifies the name of the attribute. This parameter is mandatory.
 
     .PARAMETER value
@@ -28,14 +28,19 @@ function New-BrevoContactAttribute {
     Specifies the type of the attribute. Valid values are "text", "date", "float", "boolean", "multiple-choice", "id", and "category". The default value is "text". This parameter is optional.
     
     .EXAMPLE
-    PS C:\> New-BrevoContactAttribute -attributeCategory "normal" -attributeName "FirstName" -type "text"
+    PS C:\> New-BrevoContactAttribute -Category "normal" -Name "FirstName" -type "text"
     
     Creates a new contact attribute with the category "normal", name "FirstName", and type "text".
     
     .EXAMPLE
-    PS C:\> New-BrevoContactAttribute -attributeCategory "category" -attributeName "Status" -enumeration @{"Active"="1"; "Inactive"="0"}
+    PS C:\> New-BrevoContactAttribute -Category "category" -Name "Status" -enumeration @{"Active"="1"; "Inactive"="0"}
     
     Creates a new contact attribute with the category "category", name "Status", and an enumeration of values.
+
+    .EXAMPLE
+    PS C:\> New-BrevoContactAttribute -Category normal -Name "TAGS" -type multiple-choice -multiCategoryOptions @("Option1", "Option2", "Option3")
+    
+    Creates a new multiple-choice contact attribute with the category "normal", name "TAGS", type "multiple-choice", and specified options.
     
     .OUTPUTS
     Returns the created attribute object.
@@ -45,10 +50,12 @@ function New-BrevoContactAttribute {
     param (
         [Parameter(Mandatory = $true, HelpMessage = "Category of the attribute")]
         [ValidateSet("normal", "transactional", "category", "calculated", "global")]
-        $attributeCategory,
+        [Alias ("attributeCategory")]
+        $Category,
 
         [Parameter(Mandatory = $true, HelpMessage = "The name of the attribute")]
-        $attributeName,
+        [Alias ("attributeName")]
+        $Name,
 
         [Parameter(Mandatory = $false, HelpMessage = "Value of the attribute. Use only if the attribute's category is 'calculated' or 'global'")]
         [ValidateSet("calculated", "global")]
@@ -61,7 +68,7 @@ function New-BrevoContactAttribute {
         [Parameter(Mandatory = $false, HelpMessage = "List of values and labels that the attribute can take. Use only if the attribute's category is 'category'")]
         $enumeration,
 
-        [Parameter(Mandatory = $false, HelpMessage = "List of options you want to add for multiple-choice attribute. Use only if the attribute's category is 'normal' and attribute's type is 'multiple-choice'.")]
+        [Parameter(Mandatory = $false, HelpMessage = "List of options you want to add for multiple-choice attribute. Use only if the attribute's category is 'normal' and attribute's type is 'multiple-choice'. e.g. @('Option1', 'Option2')")]
         $multiCategoryOptions,
 
         [Parameter(Mandatory = $false, HelpMessage = "Type of the attribute. Use only if the attribute's category is 'normal', 'category' or 'transactional'
@@ -71,7 +78,7 @@ Type category is only available if the category is category attribute")]
         $type = "text"
 
     )
-    $uri = "/contacts/attributes" + "/" + $attributeCategory + "/" + $attributeName
+    $uri = "/contacts/attributes" + "/" + $Category + "/" + $Name
     $method = "POST"
     $body = @{}
     $value ? $(body.value = $value) : $null
@@ -88,7 +95,7 @@ Type category is only available if the category is category attribute")]
     }
     try {
         $attribute = Invoke-BrevoCall @Params
-        $attribute = Get-BrevoContactAttribute -Name $attributeName
+        $attribute = Get-BrevoContactAttribute -Name $Name
     }
     catch {
     }
