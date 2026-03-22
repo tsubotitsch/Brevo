@@ -3,7 +3,29 @@
 The format is based on and uses the types of changes according to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [Unreleased]
+## [Unreleased]
+
+### Added
+
+- function Update-BrevoContactAttribute
+- function New-BrevoContactAttributeMultipleChoiceOption
+- function Remove-BrevoContactAttributeMultipleChoiceOption
+- function Get-BrevoContactEmailCampaignStatistic
+- function Update-BrevoContactFolder
+
+## Changed
+
+- **source\Public\Contact Management\Contact\New-BrevoContact.ps1** Added option 'CreateMultiChoiceOptions' to add MultiChoiceOptions automatically
+- **source\Public\Contact Management\Remove-BrevoContactAttribute.ps1** Removed debug output
+- **source\Public\Contact Management\Attribute\Get-BrevoContactAttribute.ps1** Added filter for type and category
+- **source\Public\Contact Management\Attribute\Update-BrevoContactAttribute.ps1** Added option 'AddMultiChoiceOptions' to add values to existing multi-choice options instead replacing them
+
+### Fixed
+
+- **source\Public\Contact Management\Contact\Get-BrevoContact.ps1** Fixed Id/Email/none parameter
+- **source\Public\Invoke-BrevoCall.ps1** Fixed errorhandling for ErrorAction
+- **source\Public\Contact Management\Contact\New-BrevoContact.ps1** Pass parameter to update contact to API call
+- **source\Public\Contact Management\Attribute\Update-BrevoContactAttribute.ps1** Fixed attribute handling
 
 ## [0.4.0] - 2025-06-25
 

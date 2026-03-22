@@ -13,6 +13,16 @@ function Get-BrevoContactAttribute {
     and can accept a single string or an array of strings. If not specified, all attributes 
     are returned.
 
+    .PARAMETER Category
+    The category of the contact attribute(s) to filter by. Valid values are "normal", 
+    "transactional", "category", "calculated", and "global". If not specified, attributes 
+    from all categories are returned.
+
+    .PARAMETER Type
+    The type of the contact attribute(s) to filter by. Valid values are "text", "date", 
+    "float", "boolean", and "multiple-choice". If not specified, attributes of all types 
+    are returned.
+
     .EXAMPLE
     # Retrieve all contact attributes
     Get-BrevoContactAttribute
@@ -28,12 +38,27 @@ function Get-BrevoContactAttribute {
     Get-BrevoContactAttribute -Name "FirstName", "LastName"
     
     # Retrieve multiple contact attributes by names
+
+    .EXAMPLE
+    Get-BrevoContactAttribute -Category normal -Type multiple-choice
+
+    # Retrieve all normal category multiple-choice contact attributes
+
+    .OUTPUTS
+    Returns an array of contact attribute objects.
+
     #>
     
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $false, HelpMessage = "The name of the contact attribute(s) (case-insensitive)")]
-        [string[]]$Name
+        [string[]]$Name,
+        [Parameter(Mandatory = $false, HelpMessage = "The category of the contact attribute(s)")]
+        [ValidateSet('normal', 'transactional', 'category', 'calculated', 'global')]
+        [string]$Category = "normal",
+        [Parameter(Mandatory = $false, HelpMessage = "The type of the contact attribute(s)")]
+        [ValidateSet('text', 'date', 'float', 'boolean', 'multiple-choice')]
+        [string]$Type
     )
     $method = "GET"
     $uri = "/contacts/attributes"
@@ -49,6 +74,13 @@ function Get-BrevoContactAttribute {
     if ($Name -is [Array]) {
         $attribute = $attribute | Where-Object { $Name -contains $_.name }
     }
+
+    if ($PSBoundParameters.ContainsKey('Category')) {
+        $attribute = $attribute | Where-Object { $_.category -ieq $Category }
+    }
+    if ($PSBoundParameters.ContainsKey('Type')) {
+        $attribute = $attribute | Where-Object { $_.type -ieq $Type }
+    }   
 
     return $attribute
 }

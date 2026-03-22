@@ -69,17 +69,18 @@ function Invoke-BrevoCall {
 
     Write-Debug ($PsBoundParameters | Out-String)
     Write-Debug ($args | Out-String)
+    Write-Debug ($body | ConvertTo-Json -Depth 10 | Out-String)
 
     if ([string]::IsNullOrEmpty($script:APIuri)) {
         throw "Please connect first to the Brevo API using Connect-Brevo"
     }
     if ($uri -notlike "$script:APIuri*") {
-        Write-Debug "$($MyInvocation.MyCommand):relative path provided"
+        # Write-Debug "$($MyInvocation.MyCommand):relative path provided"
         $urifull = ($script:apiuri + $uri).TrimEnd('/')
-        Write-Debug "$($MyInvocation.MyCommand):urifull: $urifull"
+        # Write-Debug "$($MyInvocation.MyCommand):urifull: $urifull"
     }
     else {
-        Write-Debug "$($MyInvocation.MyCommand):absolute path provided"
+        # Write-Debug "$($MyInvocation.MyCommand):absolute path provided"
         $urifull = $uri
     }
     if ($limit) {
@@ -118,10 +119,10 @@ function Invoke-BrevoCall {
             $loop = $true
             $Error.clear()
             $content = Invoke-RestMethod @Params -ResponseHeadersVariable responseheaders -StatusCodeVariable StatusCodeVariable -ErrorAction Stop
-            Write-Debug ""
-            Write-Debug "PropertyCount: $(($content.PSObject.Properties| Tee-Object -Variable Name | Measure-Object).count)"
-            Write-Debug "Content: $($content |Select-Object * | Out-String)"
-            Write-Debug "Property Count: $($content.count)"
+            Write-Debug "StatusCode: $StatusCodeVariable"
+            # Write-Debug "PropertyCount: $(($content.PSObject.Properties| Tee-Object -Variable Name | Measure-Object).count)"
+            # Write-Debug "Content: $($content |Select-Object * | Out-String)"
+            # Write-Debug "Property Count: $($content.count)"
             if ((($content.PSObject.Properties | Tee-Object -Variable name | Measure-Object).count -eq 2) -and ($content.PSObject.Properties.Name -contains "Count")) {
                 $Property = ($content.PSObject.Properties | Where-Object { $_.Name -ne 'count' }).name
                 $offset = $offset + ($content.$Property).count
@@ -144,8 +145,8 @@ function Invoke-BrevoCall {
             else {
                 $result = $content
                 $loop = $false
-                Write-Debug "No property count - ending loop"
-                Write-Debug "result: $($result | Out-String)"
+                # Write-Debug "No property count - ending loop"
+                # Write-Debug "result: $($result | Out-String)"
             }
         } while (($loop -eq $true) -and ($offset -lt $content.Count))
         
@@ -160,10 +161,18 @@ function Invoke-BrevoCall {
         }
     }
     catch {
-        throw $_.Exception.Message
-        # $e = Get-Error -Newest 1
-        # if ($e.TargetObject.Message) {
-        #     $e.TargetObject.Message | ConvertFrom-Json | Out-String | Write-Error
+        # throw $_.Exception.Message
+        # foreach ($key in $_.errordetails.PSObject.Properties.Name) {
+        #     Write-Error "$key : $($_.errordetails.$key)"
         # }
+        # Write-error "---"
+        # foreach ($key in $_.errordetails.message | ConvertFrom-Json)
+        # {
+        #     Write-Error $key
+        # }
+        # Write-Error "---"
+        $e = $_ -replace '(\r\n|\n|\r)+', ''
+        $e = $e.Replace([Environment]::NewLine, ' ')
+        Write-Error $e
     }
 }
