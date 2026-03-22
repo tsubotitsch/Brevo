@@ -7,31 +7,36 @@
 
 [Brevo](https://www.brevo.com) is a versatile digital marketing platform that enables businesses to streamline customer communication through multiple channels, including email, SMS, and more.
 
-This PowerShell module contains functions to automate Brevo via the Brevo API
+This PowerShell module provides a comprehensive set of functions to automate interactions with Brevo using the Brevo API.
 
-See [Brevo API documentation](https://developers.brevo.com/reference/getting-started-1)
+For detailed API reference, see the [Brevo API documentation](https://developers.brevo.com/reference/getting-started-1).
 
 ## Functions
 
-| General          | Contact Management    | Marketing           | Account and Settings |
-| ---------------- | --------------------- | ------------------- | -------------------- |
-| Connect-Brevo    | Add-BrevoContactListMember | Get-BrevoEmailCampaign    | Get-BrevoUser             |
-| Disconnect-Brevo | Get-BrevoContact           | Remove-BrevoEmailCampaign | Get-BrevoUserActivitylog  |
-| Invoke-BrevoCall | Get-BrevoContactAttribute  | Send-BrevoEmailCampaign   | Get-BrevoUserPermission  |
-|                  | Get-BrevoContactFolder     |                     | Send-BrevoUserInvitation  |
-|                  | Get-BrevoContactList       |                     |                      |
-|                  | Get-BrevoContactListMember |                     | Confirm-BrevoDomain       |
-|                  | Get-BrevoContactSegment    |                     | Get-BrevoDomain           |
-|                  | Import-BrevoContact        |                     | New-BrevoDomain           |
-|                  | New-BrevoContact           |                     | Remove-BrevoDomain        |
-|                  | Update-BrevoContact        |                     | Get-BrevoAccount          |
-|                  | Remove-BrevoContact        |                     | Get-BrevoSender           |
-|                  | New-BrevoContactList       |                     |                      |
-|                  |                       |                     | New-BrevoDomain           |
-|                  |                       |                     | Remove-BrevoDomain        |
-|                  |                       |                     | Test-BrevoDomain          |
+| General          | Contact Management                               | Marketing                 | Account and Settings     | Sales CRM        |
+| ---------------- | ------------------------------------------------ | ------------------------- | ------------------------ | ---------------- |
+| Connect-Brevo    | Add-BrevoContactListMember                       | Get-BrevoEmailCampaign    | Confirm-BrevoDomain      | Get-BrevoNote    |
+| Disconnect-Brevo | Get-BrevoContact                                 | Remove-BrevoEmailCampaign | Get-BrevoAccount         | New-BrevoNote    |
+| Invoke-BrevoCall | Get-BrevoContactAttribute                        | Send-BrevoEmailCampaign   | Get-BrevoDomain          | Remove-BrevoNote |
+|                  | Get-BrevoContactEmailCampaignStatistic           |                           | Get-BrevoSender          | Update-BrevoNote |
+|                  | Get-BrevoContactFolder                           |                           | Get-BrevoUser            |                  |
+|                  | Get-BrevoContactList                             |                           | Get-BrevoUserActivitylog |                  |
+|                  | Get-BrevoContactListMember                       |                           | Get-BrevoUserPermission  |                  |
+|                  | Get-BrevoContactSegment                          |                           | New-BrevoDomain          |                  |
+|                  | Import-BrevoContact                              |                           | Remove-BrevoDomain       |                  |
+|                  | New-BrevoContact                                 |                           | Remove-BrevoSender       |                  |
+|                  | New-BrevoContactAttributeMultipleChoiceOption    |                           | Send-BrevoUserInvitation |                  |
+|                  | New-BrevoContactList                             |                           | Test-BrevoDomain         |                  |
+|                  | Remove-BrevoContact                              |                           |                          |                  |
+|                  | Remove-BrevoContactAttributeMultipleChoiceOption |                           |                          |                  |
+|                  | Remove-BrevoContactFolder                        |                           |                          |                  |
+|                  | Remove-BrevoContactList                          |                           |                          |                  |
+|                  | Update-BrevoContact                              |                           |                          |                  |
+|                  | Update-BrevoContactAttribute                     |                           |                          |                  |
+|                  | Update-BrevoContactFolder                        |                           |                          |                  |
+|                  | Update-BrevoContactList                          |                           |                          |                  |
 
-## How to start?
+## Getting Started
 
 ```powershell
 # PowerShellGet 2.x
@@ -49,17 +54,17 @@ Get-Command -Module Brevo
 Disconnect-Brevo
 ```
 
-## 1st steps
+## First Steps
 
-You have to have an API key first. [Using your API key to authenticate](https://developers.brevo.com/docs/getting-started#using-your-api-key-to-authenticate)
+First, you'll need an API key. [Using your API key to authenticate](https://developers.brevo.com/docs/getting-started#using-your-api-key-to-authenticate)
 
-- Login to [Brevo.com](https://brevo.com) or register for free
-- Navigate to My Profile > SMTP & API > API-Key > [Generate ne API Key](https://app.brevo.com/settings/keys/api)
+- Log in to [Brevo.com](https://brevo.com) or register for a free account
+- Navigate to My Profile > SMTP & API > API-Key > [Generate a new API Key](https://app.brevo.com/settings/keys/api)
 - Copy the generated key for later use
 
 ```powershell
-# Create Credentials
-# $apikey = Get-credential -Message "Please enter your Brevo API key (username doesn't matter)"
+# Store Credentials Securely
+# $apikey = Get-Credential -Message "Please enter your Brevo API key (username doesn't matter)"
 # $apikey | Export-Clixml -Path ".\Brevo-APIkey.local.xml"
 
 $apikey = Import-Clixml -Path ".\Brevo-APIkey.local.xml"
@@ -67,12 +72,12 @@ $apikey = Import-Clixml -Path ".\Brevo-APIkey.local.xml"
 Connect-Brevo -APIkey $apikey
 ```
 
-## Retrieving data
+## Retrieving Data
 
-### List all attributes
+### List all contact attributes
 
 ```powershell
-Get-BrevoContactAttributes
+Get-BrevoContactAttribute
 ```
 
 ### List all contact folders
@@ -87,7 +92,7 @@ Get-BrevoContactFolder | Format-Table
 Get-BrevoContactList | Format-Table
 ```
 
-## Creating data
+## Creating Data
 
 ### Create a contact folder
 
@@ -105,11 +110,15 @@ New-BrevoContactList -Name "MyList" -FolderId $ContactFolder.id
 ### Create a contact attribute
 
 ```powershell
-New-BrevoContactAttribute -attributeCategory normal -type text -attributeName USERTYPE
+New-BrevoContactAttribute -AttributeCategory normal -Type text -AttributeName USERTYPE
 ```
 
-## Create a new contact
+### Create a new contact
 
 ```powershell
-New-BrevoContact -Email "test01@example.org" -attributes @{FNAME="Elly"; LNAME="Roger";COUNTRIES=@("India","China")} -listIds 22,355
+New-BrevoContact -Email "test01@example.org" -Attributes @{FNAME="Elly"; LNAME="Roger"; COUNTRIES=@("India","China")} -ListIds 22,355
 ```
+
+### Complete Example
+
+See [Create-Contacts.ps1](examples/Create-Contacts.ps1) for a complete code example
