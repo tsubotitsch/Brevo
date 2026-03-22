@@ -21,6 +21,7 @@ function Send-BrevoEmailCampaign {
     [CmdletBinding()]   
     param(
         [Parameter(Mandatory = $true, HelpMessage = "ID of the campaign to be sent")]
+        [Alias("Id")]
         [string]$campaignId
     )
     $uri = "https://api.sendinblue.com/v3/emailCampaigns/$campaignId/sendNow"   

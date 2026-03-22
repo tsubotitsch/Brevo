@@ -18,7 +18,8 @@ function New-BrevoContact
     
     .PARAMETER attributes
     A hashtable containing attributes and their values for the contact. The attributes should be passed in uppercase letters. Ensure the attributes exist in your Brevo account. For example: `-attributes @{"FIRSTNAME"="John"; "LASTNAME"="Doe"}`.
-    
+    ATTENTION: multi-choice options must be available in Brevo before assigning them.
+
     .PARAMETER emailBlacklisted
     A switch to blacklist the contact for emails. This parameter is optional.
     
@@ -56,6 +57,8 @@ function New-BrevoContact
         [switch]$smsBlacklisted,
         [Parameter(Mandatory = $false, HelpMessage = "Facilitate to update the existing contact in the same request. Default is false.")]
         [switch]$updateEnabled = $false,
+        [Parameter(Mandatory = $false, HelpMessage = "Options to add for a multiple-choice attribute. Use only if the attribute's category is 'normal' and the attribute's type is 'multiple-choice'")]
+        [switch]$CreateMultiChoiceOptions = $false,
         [Parameter(Mandatory = $false, HelpMessage = "transactional email forbidden sender for contact. Use only for email Contact ( only available if updateEnabled = true )")]
         [string[]]$smtpBlacklistSender
 
@@ -78,13 +81,54 @@ function New-BrevoContact
         $attrib = @{}
         if ($attributes -is [hashtable]) {
             $attributes.GetEnumerator() | ForEach-Object {
-                $attrib.Add($_.Key, $_.Value)
+                $attrib.Add($_.Key.toupper(), $_.Value)
             }
         }
         else {
             Write-Error "The 'attributes' parameter must be a hashtable."
         }
         $body.attributes = $attrib
+    }
+    if ($emailBlacklisted.IsPresent) {
+        $body.emailBlacklisted = $true
+    }
+    if ($smsBlacklisted.IsPresent) {
+        $body.smsBlacklisted = $true
+    }
+    if ($updateEnabled.IsPresent) {
+        $body.updateEnabled = $true
+    }
+    if ($smtpBlacklistSender) {
+        $body.smtpBlacklistSender = $smtpBlacklistSender
+    }
+    if ($CreateMultiChoiceOptions) {
+        Write-Host "Checking and adding multi-choice options if needed..." -ForegroundColor Magenta
+        # get all existing multi-choice attributes
+        Write-Debug "Checking for multi-choice attributes to add options..."
+        $multiChoiceAttributes = Get-BrevoContactAttribute -Category normal -Type "multiple-choice"
+        # check if one of the given $attributes is multi-choice
+        foreach ($attrKey in $attributes.Keys) {
+            $upperKey = $attrKey.ToUpper()
+            $matchingAttr = $multiChoiceAttributes | Where-Object { $_.name -ieq $upperKey }
+            if ($matchingAttr) {
+                # add missing options
+                $existingOptions = $matchingAttr.multiCategoryOptions
+                Write-Host "Existing options for multi-choice attribute '$upperKey': $($existingOptions -join ', ')" -ForegroundColor Cyan
+                $newOptions = @()
+                foreach ($option in $attributes[$attrKey]) {
+                    if ($existingOptions -notcontains $option) {
+                        Write-Host "Option '$option' is missing in multi-choice attribute '$upperKey'. Adding it." -ForegroundColor Magenta
+                        $newOptions += $option
+                    }
+                }
+                if ($newOptions.Count -gt 0) {
+                    Write-Debug "Adding new options to multi-choice attribute '$upperKey': $($newOptions -join ', ')"
+                    New-BrevoContactAttributeMultipleChoiceOption -Category normal -Name $upperKey -Option $newOptions -errorAction Stop
+                } else {
+                    Write-Debug "No new options to add for multi-choice attribute '$upperKey'."
+                }
+            }
+        }
     }
 
     $Params = @{

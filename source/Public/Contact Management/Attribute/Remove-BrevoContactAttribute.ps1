@@ -42,7 +42,6 @@ function Remove-BrevoContactAttribute {
             "URI"    = $uri
             "Method" = $method
         }
-        Write-Host @Params
         $attribute = Invoke-BrevoCall @Params
     }
 }

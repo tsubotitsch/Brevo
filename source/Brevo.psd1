@@ -30,7 +30,7 @@
     Copyright            = '(c) Thomas Subotitsch. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description          = 'PowerShell functions for Brevo API'
+    Description          = 'PowerShell module for managing Brevo contacts, lists, folders, segments, attributes, email campaigns and related resources'
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion    = '7.0'
@@ -129,15 +129,3 @@
     # DefaultCommandPrefix = ''
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
