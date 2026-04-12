@@ -1,7 +1,7 @@
 # Brevo - A PowerShell module to automate your Brevo environment
 
-[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)]()
-[![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)]()
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Brevo?label=PSGallery%20Version)](https://www.powershellgallery.com/packages/Brevo)
+[![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Brevo?label=Downloads)](https://www.powershellgallery.com/packages/Brevo)
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
 [![GitHub Issues](https://img.shields.io/github/issues/tsubotitsch/Brevo?label=Issues)](https://github.com/tsubotitsch/Brevo/issues)
 
