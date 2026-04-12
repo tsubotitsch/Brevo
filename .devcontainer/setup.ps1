@@ -38,4 +38,4 @@ Write-Host "✅ Setup complete. Verifying GitVersion..."
 dotnet-gitversion /showvariable SemVer
 
 # Run a full build of the Notion module
-#./build.ps1 -tasks build -ResolveDependency -UseModuleFast
+./build.ps1 -tasks noop -ResolveDependency -UseModuleFast
