@@ -5,6 +5,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Companies
+- function Get-BrevoCompany - Retrieves a single company by ID or lists multiple companies with pagination and sorting
+- function New-BrevoCompany - Creates a new company with name and optional contact information
+- function Update-BrevoCompany - Updates company properties (name, email, phone, website, address, etc.)
+- function Remove-BrevoCompany - Deletes a company
+- function Set-BrevoCompanyLink - Links or unlinks contacts and deals to/from a company
+
+#### Deals
+- function Get-BrevoDeal - Retrieves a single deal by ID or lists multiple deals with pagination and sorting
+- function New-BrevoDeal - Creates a new deal with title, value, pipeline, and optional linked contacts/companies
+- function Update-BrevoDeal - Updates deal properties (title, value, status, stage, probability, etc.)
+- function Remove-BrevoDeal - Deletes a deal
+- function Set-BrevoDealLink - Links or unlinks contacts and companies to/from a deal
+
+#### Tasks
+- function Get-BrevoTask - Retrieves a single task by ID or lists multiple tasks with pagination
+- function New-BrevoTask - Creates a new task with name, description, due date, priority, and linked entities
+- function Update-BrevoTask - Updates task properties (name, description, status, priority, assignment, etc.)
+- function Remove-BrevoTask - Deletes a task
+
+#### Pipelines
+- function Get-BrevoPipeline - Retrieves pipeline details and stages by ID or lists all pipelines
+
+#### Files
+- function Get-BrevoCrmFile - Retrieves a single file by ID or lists multiple files with pagination
+- function New-BrevoCrmFile - Uploads a new file and optionally links it to deals, contacts, or companies
+- function Remove-BrevoCrmFile - Deletes a file
+
+#### Attributes
+- function Get-BrevoCrmAttribute - Retrieves custom attributes for a specific entity type (deals or companies)
+- function New-BrevoCrmAttribute - Creates a new custom attribute for deals or companies
+- function Remove-BrevoCrmAttribute - Deletes a custom attribute
+
 ## [0.5.0] - 2026-03-22
 
 ## Added

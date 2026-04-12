@@ -1,47 +1,47 @@
-function Get-BrevoCompany
+function Get-BrevoTask
 {
     <#
     .SYNOPSIS
-        Retrieves companies from Brevo CRM.
+        Retrieves tasks from Brevo CRM.
 
     .DESCRIPTION
-        The Get-BrevoCompany cmdlet retrieves companies from Brevo CRM. You can retrieve a single company by its ID or list multiple companies with optional filtering and pagination.
+        The Get-BrevoTask cmdlet retrieves tasks from Brevo CRM. You can retrieve a single task by its ID or list multiple tasks with optional filtering and pagination.
 
     .PARAMETER Id
-        The ID of the specific company to retrieve. This parameter is mandatory when using the ById parameter set.
+        The ID of the specific task to retrieve. This parameter is mandatory when using the ById parameter set.
 
     .PARAMETER Limit
-        The maximum number of companies to return. Default is 50.
+        The maximum number of tasks to return. Default is 50.
 
     .PARAMETER Offset
-        The number of companies to skip for pagination. Default is 0.
+        The number of tasks to skip for pagination. Default is 0.
 
     .PARAMETER Sort
         The sort order for the results. Valid values are "asc" or "desc".
 
     .PARAMETER SortBy
-        The field to sort by. 
+        The field to sort by.
 
     .EXAMPLE
-        Get-BrevoCompany -Id "123456"
+        Get-BrevoTask -Id "task123"
 
-        Retrieves a single company with ID 123456.
+        Retrieves a single task with ID task123.
 
     .EXAMPLE
-        Get-BrevoCompany -Limit 10 -Offset 0
+        Get-BrevoTask -Limit 10
 
-        Retrieves the first 10 companies.
-
-    .LINK
-        https://developers.brevo.com/reference/get-companies
+        Retrieves the first 10 tasks.
 
     .LINK
-        https://developers.brevo.com/reference/get-a-company
+        https://developers.brevo.com/reference/get-tasks
+
+    .LINK
+        https://developers.brevo.com/reference/get-a-task
     #>
     [CmdletBinding(DefaultParameterSetName = "List")]
     param (
         [Parameter(Mandatory, ParameterSetName = "ById")]
-        [Alias("CompanyId")]
+        [Alias("TaskId")]
         [string]$Id,
 
         [Parameter(ParameterSetName = "List")]
@@ -58,7 +58,7 @@ function Get-BrevoCompany
         [string]$SortBy
     )
 
-    $uri = "/companies"
+    $uri = "/crm/tasks"
     switch ($PSCmdlet.ParameterSetName)
     {
         "ById"
