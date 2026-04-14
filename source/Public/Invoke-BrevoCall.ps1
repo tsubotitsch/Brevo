@@ -59,6 +59,8 @@ function Invoke-BrevoCall {
         $method = "GET",
         [Parameter(ParameterSetName = "Body")]
         [System.Object]$body,
+        [Parameter(ParameterSetName = "Form")]
+        [hashtable]$Form,
         [Parameter(HelpMessage = "The number of results returned per page. The default and maximum value may vary per API")]
         $limit,
         [Parameter(HelpMessage = "The index of the first document in the page (starting with 0). For example, if the limit is 50 and you want to retrieve the page 2, then offset=50")]
@@ -107,6 +109,9 @@ function Invoke-BrevoCall {
         }
         "Method" = $method
     }
+    if ($Form) {
+        $Params.Headers.Remove("content-type")
+    }
     if ($body) {
         $Params.Add("Body", ($body | ConvertTo-Json -EnumsAsStrings -Depth 20))
     }
@@ -118,7 +123,13 @@ function Invoke-BrevoCall {
             Write-Debug "URI: $($Params.URI)"
             $loop = $true
             $Error.clear()
-            $content = Invoke-RestMethod @Params -ResponseHeadersVariable responseheaders -StatusCodeVariable StatusCodeVariable -ErrorAction Stop
+            if ($Form) {
+                $content = Invoke-RestMethod @Params -Form $Form -ResponseHeadersVariable responseheaders -StatusCodeVariable StatusCodeVariable -ErrorAction Stop
+            }
+            else
+            {
+                $content = Invoke-RestMethod @Params -ResponseHeadersVariable responseheaders -StatusCodeVariable StatusCodeVariable -ErrorAction Stop
+            }
             Write-Debug "StatusCode: $StatusCodeVariable"
             # Write-Debug "PropertyCount: $(($content.PSObject.Properties| Tee-Object -Variable Name | Measure-Object).count)"
             # Write-Debug "Content: $($content |Select-Object * | Out-String)"

@@ -14,7 +14,7 @@ function New-BrevoTask
         The description of the task.
 
     .PARAMETER DueDate
-        The due date for the task.
+        The due date for the task. Accepts any value parseable as a DateTime; sent to the API as ISO 8601.
 
     .PARAMETER Priority
         The priority of the task.
@@ -52,7 +52,7 @@ function New-BrevoTask
         [string]$Description,
 
         [Parameter()]
-        [string]$DueDate,
+        [DateTime]$DueDate,
 
         [Parameter()]
         [string]$Priority,
@@ -74,7 +74,6 @@ function New-BrevoTask
     )
 
     $uri = "/crm/tasks"
-    $method = "POST"
 
     $body = @{
         name = $Name
@@ -86,7 +85,7 @@ function New-BrevoTask
     }
     if ($PSBoundParameters.ContainsKey("DueDate"))
     {
-        $body.dueDate = $DueDate
+        $body.dueDate = $DueDate.ToUniversalTime().ToString("o")
     }
     if ($PSBoundParameters.ContainsKey("Priority"))
     {
@@ -115,7 +114,7 @@ function New-BrevoTask
 
     $Params = @{
         "URI"    = $uri
-        "Method" = $method
+        "Method" = "POST"
         "Body"   = $body
     }
 

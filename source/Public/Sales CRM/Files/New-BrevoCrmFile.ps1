@@ -5,7 +5,7 @@ function New-BrevoCrmFile
         Uploads a new file to Brevo CRM.
 
     .DESCRIPTION
-        The New-BrevoCrmFile cmdlet uploads a new file to Brevo CRM. The file is uploaded using multipart form data.
+        The New-BrevoCrmFile cmdlet uploads a new file to Brevo CRM using multipart form data.
 
     .PARAMETER FilePath
         The local path to the file to upload. This parameter is mandatory.
@@ -48,38 +48,36 @@ function New-BrevoCrmFile
         [string[]]$LinkedCompanyIds
     )
 
-    # Verify file exists
-    if (-not (Test-Path $FilePath))
+    try
     {
-        throw "File not found: $FilePath"
+        $fileItem = Get-Item -LiteralPath $FilePath -ErrorAction Stop
+    }
+    catch
+    {
+        throw "Cannot access file '$FilePath': $_"
     }
 
-    $uri = "/crm/files"
-    $method = "POST"
-
-    # For multipart file upload, we would need special handling
-    # This is a placeholder - the actual implementation would depend on how Invoke-BrevoCall handles multipart
-    $body = @{
-        file = [System.IO.File]::ReadAllBytes($FilePath)
+    $form = @{
+        file = $fileItem
     }
 
     if ($PSBoundParameters.ContainsKey("LinkedDealIds"))
     {
-        $body.linkedDealIds = $LinkedDealIds
+        $form.linkedDealIds = $LinkedDealIds
     }
     if ($PSBoundParameters.ContainsKey("LinkedContactIds"))
     {
-        $body.linkedContactIds = $LinkedContactIds
+        $form.linkedContactIds = $LinkedContactIds
     }
     if ($PSBoundParameters.ContainsKey("LinkedCompanyIds"))
     {
-        $body.linkedCompanyIds = $LinkedCompanyIds
+        $form.linkedCompanyIds = $LinkedCompanyIds
     }
 
     $Params = @{
-        "URI"    = $uri
-        "Method" = $method
-        "Body"   = $body
+        URI    = "/crm/files"
+        Method = "POST"
+        Form   = $form
     }
 
     Invoke-BrevoCall @Params

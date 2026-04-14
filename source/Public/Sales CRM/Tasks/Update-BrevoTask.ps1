@@ -17,7 +17,7 @@ function Update-BrevoTask
         The updated description of the task.
 
     .PARAMETER DueDate
-        The updated due date of the task.
+        The updated due date of the task. Accepts any value parseable as a DateTime; sent to the API as ISO 8601.
 
     .PARAMETER Priority
         The updated priority.
@@ -49,7 +49,7 @@ function Update-BrevoTask
         [string]$Description,
 
         [Parameter()]
-        [string]$DueDate,
+        [DateTime]$DueDate,
 
         [Parameter()]
         [string]$Priority,
@@ -75,7 +75,7 @@ function Update-BrevoTask
     }
     if ($PSBoundParameters.ContainsKey("DueDate"))
     {
-        $body.dueDate = $DueDate
+        $body.dueDate = $DueDate.ToUniversalTime().ToString("o")
     }
     if ($PSBoundParameters.ContainsKey("Priority"))
     {

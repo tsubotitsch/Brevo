@@ -35,7 +35,7 @@ function Set-BrevoCompanyLink
     .LINK
         https://developers.brevo.com/reference/link-unlink-a-company
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "Medium")]
     param (
         [Parameter(Mandatory)]
         [Alias("CompanyId")]
@@ -75,11 +75,14 @@ function Set-BrevoCompanyLink
         $body.unlinkDealIds = $UnlinkDealIds
     }
 
-    $Params = @{
-        "URI"    = $uri
-        "Method" = "PATCH"
-        "Body"   = $body
-    }
+    if ($PSCmdlet.ShouldProcess($Id, "Update company links"))
+    {
+        $Params = @{
+            "URI"    = $uri
+            "Method" = "PATCH"
+            "Body"   = $body
+        }
 
-    Invoke-BrevoCall @Params
+        Invoke-BrevoCall @Params
+    }
 }

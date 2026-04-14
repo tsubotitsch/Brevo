@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - function New-BrevoCrmFile - Uploads a new file and optionally links it to deals, contacts, or companies
 - function Remove-BrevoCrmFile - Deletes a file
 
+### Fixed
+
+- **New-BrevoCrmFile**: Added try/catch around `Get-Item` to surface a clear error when the file does not exist or is not readable
+
 #### Attributes
 - function Get-BrevoCrmAttribute - Retrieves custom attributes for a specific entity type (deals or companies)
 - function New-BrevoCrmAttribute - Creates a new custom attribute for deals or companies
