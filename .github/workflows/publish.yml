@@ -5,6 +5,9 @@ on:
     branches:
       - main
       # - Dev
+    paths-ignore:
+      - "**/CHANGELOG.md" # Exclude changes to the changelog file
+      - "**/README.md" # Exclude changes to the readme file
 
 defaults:
   run:
@@ -12,28 +15,27 @@ defaults:
 
 jobs:
   build-and-publish:
+    if: github.actor != 'github-actions[bot]' # Exclude commits made by GitHub Actions bot
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for Update_Changelog_Direct to push to main
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0  # Required for GitVersion
+          fetch-depth: 0 # Required for GitVersion
 
       - name: Install GitVersion
-        uses: GitTools/actions/gitversion/setup@v0
+        uses: GitTools/actions/gitversion/setup@v3.1.1
         with:
-          versionSpec: '5.x'
-      
+          versionSpec: "5.x"
+
       - name: chmod build.ps1
         run: chmod +x build.ps1
 
       - name: Package Module
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
-
-      - name: Copy Markdown Files to WikiContent
-        run: |
-          cp -r ./output/docs/* ./output/WikiContent
 
       - name: Publish Module
         env:
