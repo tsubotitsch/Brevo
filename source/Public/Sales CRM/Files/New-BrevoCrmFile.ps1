@@ -48,13 +48,6 @@ function New-BrevoCrmFile
         [string[]]$LinkedCompanyIds
     )
 
-    if ([string]::IsNullOrEmpty($script:APIuri))
-    {
-        throw "Please connect first to the Brevo API using Connect-Brevo"
-    }
-
-    $urifull = $script:APIuri.TrimEnd('/') + "/crm/files"
-
     $form = @{
         file = Get-Item -LiteralPath $FilePath
     }
@@ -72,19 +65,11 @@ function New-BrevoCrmFile
         $form.linkedCompanyIds = $LinkedCompanyIds
     }
 
-    $headers = @{
-        "api-key" = $script:APIkey.GetNetworkCredential().Password
-        "Accept"  = "application/json"
+    $Params = @{
+        URI    = "/crm/files"
+        Method = "POST"
+        Form   = $form
     }
 
-    try
-    {
-        Invoke-RestMethod -Uri $urifull -Method POST -Form $form -Headers $headers -ErrorAction Stop
-    }
-    catch
-    {
-        $e = $_ -replace '(\r\n|\n|\r)+', ''
-        $e = $e.Replace([Environment]::NewLine, ' ')
-        Write-Error $e
-    }
+    Invoke-BrevoCall @Params
 }
