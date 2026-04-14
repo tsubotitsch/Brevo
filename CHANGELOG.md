@@ -11,8 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - publish.ps1: updated pipeline
 
-## [0.7.0] - 2026-04-14
-
 ### Added
 
 #### build.ps1
