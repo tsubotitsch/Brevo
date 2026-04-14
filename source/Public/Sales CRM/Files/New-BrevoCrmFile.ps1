@@ -53,7 +53,7 @@ function New-BrevoCrmFile
         throw "Please connect first to the Brevo API using Connect-Brevo"
     }
 
-    $urifull = ($script:APIuri + "/crm/files").TrimEnd('/')
+    $urifull = $script:APIuri.TrimEnd('/') + "/crm/files"
 
     $form = @{
         file = Get-Item -LiteralPath $FilePath
