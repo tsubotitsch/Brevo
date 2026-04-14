@@ -30,6 +30,7 @@ function Get-BrevoPipeline
     param (
         [Parameter()]
         [Alias("PipelineId")]
+        [ValidateNotNullOrEmpty()]
         [string]$Id
     )
 
