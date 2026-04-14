@@ -52,8 +52,8 @@ BuildWorkflow:
     - Build_Module_ModuleBuilder
     - Build_NestedModules_ModuleBuilder
     - Create_changelog_release_output
-    - Generate_Markdown_For_Public_Commands
-    - Generate_MAML_from_built_module
+    # - Generate_Markdown_For_Public_Commands
+    # - Generate_MAML_from_built_module
 
   minibuild:
     - Clean
@@ -70,15 +70,13 @@ BuildWorkflow:
     # - Generate_External_Help_File_For_Public_Commands
     - Clean_Markdown_Of_Public_Commands
     # - Generate_Wiki_Sidebar
-    - Generate_Wiki_Sidebar_From_Ps1
     - Clean_Markdown_Metadata
+    # - Copy_Wiki_Content_Custom
+    - Generate_Wiki_Sidebar_From_Ps1
+    - Update_Wiki_Home
     - Package_Wiki_Content
 
-  updatedocs:
-    - Publish_GitHub_Wiki_Content
-
   sidebar:
-    # - Generate_Wiki_Sidebar_Custom
     - Generate_Wiki_Sidebar_From_Ps1
 
   pack:
@@ -106,9 +104,10 @@ BuildWorkflow:
   #- Merge_CodeCoverage_Files
 
   publish:
-    - Publish_GitHub_Wiki_Content # Runs first, if docs can't be generated, the release will fail
     - Publish_Release_To_GitHub
+    - Update_Changelog_Direct
     - publish_module_to_gallery
+    - Publish_GitHub_Wiki_Content #_Custom # Runs last to ensure that the module is published to the gallery, even if the wiki content is not updated.
 
 ####################################################
 #       PESTER  Configuration                      #
@@ -206,7 +205,7 @@ DscResource.DocGenerator:
   #     - '\*\*(.+?)\*\*' # Match bold
   #     - '\*(.+?)\*' # Match Italic (asterisk)
   Publish_GitHub_Wiki_Content:
-    Debug: true
+    Debug: false
   Generate_Wiki_Content:
     Generate_Markdown_For_Public_Commands:
       WithModulePage: true
