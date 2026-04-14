@@ -48,8 +48,17 @@ function New-BrevoCrmFile
         [string[]]$LinkedCompanyIds
     )
 
+    try
+    {
+        $fileItem = Get-Item -LiteralPath $FilePath -ErrorAction Stop
+    }
+    catch
+    {
+        throw "Cannot access file '$FilePath': $_"
+    }
+
     $form = @{
-        file = Get-Item -LiteralPath $FilePath
+        file = $fileItem
     }
 
     if ($PSBoundParameters.ContainsKey("LinkedDealIds"))
