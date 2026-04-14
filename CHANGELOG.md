@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### build.ps1
+- Introduced a new task `Update_Wiki_Home` that synchronizes the project `README.md` with the GitHub Wiki home page.
+  - Copies `README.md` content into `WikiContent/Home.md`.
+  - Automatically generates a `_Footer.md` file containing:
+    - The current UTC timestamp.
+    - The semantic version retrieved via `dotnet-gitversion`.
+  - Ensures the target wiki directory exists before writing files.
+  - Provides logging output and error handling for missing README scenarios.
+  - Enhances documentation consistency by keeping the wiki homepage aligned with the repository README.
+
+- Added a new task `Update_Changelog_Direct` to automate changelog updates during the build process.
+  - Invokes `Update-ChangelogDirect` with dynamically resolved parameters.
+  - Supports authentication via multiple environment variables (`GitHubToken`, `GITHUB_TOKEN`).
+  - Configures Git user identity from build configuration or environment variables.
+  - Adds support for conditional changelog updates on prerelease versions.
+  - Improves CI/CD automation by integrating changelog generation directly into the pipeline.
+
+### Changed
+
+#### build.yaml
+- Modified build workflow task execution:
+  - Disabled documentation generation steps (`Generate_Markdown_For_Public_Commands`, `Generate_MAML_from_built_module`) in the default build pipeline.
+  - Reordered and expanded wiki-related tasks:
+    - Added `Update_Wiki_Home` to ensure the wiki homepage is updated during documentation packaging.
+    - Adjusted placement of `Generate_Wiki_Sidebar_From_Ps1` for improved sequencing.
+    - Added optional hooks for custom wiki content handling.
+  - Updated `publish` pipeline sequence:
+    - Moved `Publish_GitHub_Wiki_Content` to run last, ensuring module publishing is not blocked by documentation issues.
+    - Introduced `Update_Changelog_Direct` before publishing to automate changelog updates as part of release flow.
+  - Removed the `updatedocs` workflow, simplifying the pipeline structure.
+
+- Updated configuration for `Publish_GitHub_Wiki_Content`:
+  - Disabled debug mode (`Debug: false`) to reduce verbosity in build output.
+
+
+## [0.6.0] - 2026-04-14
+
+### Added
+
 #### Companies
 - function Get-BrevoCompany - Retrieves a single company by ID or lists multiple companies with pagination and sorting
 - function New-BrevoCompany - Creates a new company with name and optional contact information
