@@ -5,7 +5,7 @@ function New-BrevoCrmFile
         Uploads a new file to Brevo CRM.
 
     .DESCRIPTION
-        The New-BrevoCrmFile cmdlet uploads a new file to Brevo CRM. The file is uploaded using multipart form data.
+        The New-BrevoCrmFile cmdlet uploads a new file to Brevo CRM using multipart form data.
 
     .PARAMETER FilePath
         The local path to the file to upload. This parameter is mandatory.
@@ -48,39 +48,43 @@ function New-BrevoCrmFile
         [string[]]$LinkedCompanyIds
     )
 
-    # Verify file exists
-    if (-not (Test-Path $FilePath))
+    if ([string]::IsNullOrEmpty($script:APIuri))
     {
-        throw "File not found: $FilePath"
+        throw "Please connect first to the Brevo API using Connect-Brevo"
     }
 
-    $uri = "/crm/files"
-    $method = "POST"
+    $urifull = ($script:APIuri + "/crm/files").TrimEnd('/')
 
-    # For multipart file upload, we would need special handling
-    # This is a placeholder - the actual implementation would depend on how Invoke-BrevoCall handles multipart
-    $body = @{
-        file = [System.IO.File]::ReadAllBytes($FilePath)
+    $form = @{
+        file = Get-Item -LiteralPath $FilePath
     }
 
     if ($PSBoundParameters.ContainsKey("LinkedDealIds"))
     {
-        $body.linkedDealIds = $LinkedDealIds
+        $form.linkedDealIds = $LinkedDealIds
     }
     if ($PSBoundParameters.ContainsKey("LinkedContactIds"))
     {
-        $body.linkedContactIds = $LinkedContactIds
+        $form.linkedContactIds = $LinkedContactIds
     }
     if ($PSBoundParameters.ContainsKey("LinkedCompanyIds"))
     {
-        $body.linkedCompanyIds = $LinkedCompanyIds
+        $form.linkedCompanyIds = $LinkedCompanyIds
     }
 
-    $Params = @{
-        "URI"    = $uri
-        "Method" = $method
-        "Body"   = $body
+    $headers = @{
+        "api-key" = $script:APIkey.GetNetworkCredential().Password
+        "Accept"  = "application/json"
     }
 
-    Invoke-BrevoCall @Params
+    try
+    {
+        Invoke-RestMethod -Uri $urifull -Method POST -Form $form -Headers $headers -ErrorAction Stop
+    }
+    catch
+    {
+        $e = $_ -replace '(\r\n|\n|\r)+', ''
+        $e = $e.Replace([Environment]::NewLine, ' ')
+        Write-Error $e
+    }
 }

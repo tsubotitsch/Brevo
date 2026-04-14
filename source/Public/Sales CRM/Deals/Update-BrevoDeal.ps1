@@ -26,7 +26,7 @@ function Update-BrevoDeal
         The updated stage ID.
 
     .PARAMETER ExpectedCloseDate
-        The updated expected close date.
+        The updated expected close date. Accepts any value parseable as a DateTime; sent to the API as ISO 8601.
 
     .PARAMETER ProbabilityPercentage
         The updated probability percentage (0-100).
@@ -61,9 +61,10 @@ function Update-BrevoDeal
         [string]$StageId,
 
         [Parameter()]
-        [string]$ExpectedCloseDate,
+        [DateTime]$ExpectedCloseDate,
 
         [Parameter()]
+        [ValidateRange(0, 100)]
         [int]$ProbabilityPercentage
     )
 
@@ -93,7 +94,7 @@ function Update-BrevoDeal
     }
     if ($PSBoundParameters.ContainsKey("ExpectedCloseDate"))
     {
-        $body.expectedCloseDate = $ExpectedCloseDate
+        $body.expectedCloseDate = $ExpectedCloseDate.ToUniversalTime().ToString("o")
     }
     if ($PSBoundParameters.ContainsKey("ProbabilityPercentage"))
     {

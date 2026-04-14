@@ -20,12 +20,17 @@ function New-BrevoCrmAttribute
         The data type of the attribute (e.g., "text", "number", "date").
 
     .PARAMETER IsRequired
-        If $true, this attribute will be required.
+        Switch to mark this attribute as required.
 
     .EXAMPLE
         New-BrevoCrmAttribute -Entity "deals" -Name "custom_field" -Label "Custom Field" -Type "text"
 
         Creates a new text attribute for deals.
+
+    .EXAMPLE
+        New-BrevoCrmAttribute -Entity "companies" -Name "contract_signed" -Label "Contract Signed" -Type "boolean" -IsRequired
+
+        Creates a required boolean attribute for companies.
 
     .LINK
         https://developers.brevo.com/reference/create-an-attribute
@@ -47,7 +52,7 @@ function New-BrevoCrmAttribute
         [string]$Type,
 
         [Parameter()]
-        [bool]$IsRequired = $false
+        [switch]$IsRequired
     )
 
     $uri = "/crm/attributes"
@@ -68,7 +73,7 @@ function New-BrevoCrmAttribute
     }
     if ($PSBoundParameters.ContainsKey("IsRequired"))
     {
-        $body.isRequired = $IsRequired
+        $body.isRequired = $IsRequired.IsPresent
     }
 
     $Params = @{

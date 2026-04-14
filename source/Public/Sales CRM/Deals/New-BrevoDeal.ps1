@@ -26,7 +26,7 @@ function New-BrevoDeal
         The ID of the stage within the pipeline.
 
     .PARAMETER ExpectedCloseDate
-        The expected close date of the deal.
+        The expected close date of the deal. Accepts any value parseable as a DateTime; sent to the API as ISO 8601.
 
     .PARAMETER ProbabilityPercentage
         The probability of winning the deal (0-100).
@@ -67,9 +67,10 @@ function New-BrevoDeal
         [string]$StageId,
 
         [Parameter()]
-        [string]$ExpectedCloseDate,
+        [DateTime]$ExpectedCloseDate,
 
         [Parameter()]
+        [ValidateRange(0, 100)]
         [int]$ProbabilityPercentage,
 
         [Parameter()]
@@ -80,7 +81,6 @@ function New-BrevoDeal
     )
 
     $uri = "/crm/deals"
-    $method = "POST"
 
     $body = @{
         title = $Title
@@ -108,7 +108,7 @@ function New-BrevoDeal
     }
     if ($PSBoundParameters.ContainsKey("ExpectedCloseDate"))
     {
-        $body.expectedCloseDate = $ExpectedCloseDate
+        $body.expectedCloseDate = $ExpectedCloseDate.ToUniversalTime().ToString("o")
     }
     if ($PSBoundParameters.ContainsKey("ProbabilityPercentage"))
     {
@@ -125,7 +125,7 @@ function New-BrevoDeal
 
     $Params = @{
         "URI"    = $uri
-        "Method" = $method
+        "Method" = "POST"
         "Body"   = $body
     }
 

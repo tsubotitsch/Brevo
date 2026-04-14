@@ -26,16 +26,16 @@ function Get-BrevoPipeline
     .LINK
         https://developers.brevo.com/reference/get-pipeline-details
     #>
-    [CmdletBinding(DefaultParameterSetName = "List")]
+    [CmdletBinding()]
     param (
-        [Parameter(ParameterSetName = "ById")]
+        [Parameter()]
         [Alias("PipelineId")]
         [string]$Id
     )
 
     $uri = "/crm/pipeline/details"
-    
-    if ($PSCmdlet.ParameterSetName -eq "ById")
+
+    if ($PSBoundParameters.ContainsKey("Id"))
     {
         $uri += "/$Id"
     }

@@ -11,40 +11,40 @@ function New-BrevoCompany
         The name of the company. This parameter is mandatory.
 
     .PARAMETER Email
-        The email address associated with the company.
+        The email address associated with the company (stored as the 'email' attribute).
 
     .PARAMETER Phone
-        The phone number of the company.
+        The phone number of the company (stored as the 'phone_number' attribute).
 
     .PARAMETER Website
-        The website URL of the company.
+        The website URL of the company (stored as the 'website' attribute).
 
     .PARAMETER Address
-        The address of the company.
+        The address of the company (stored as the 'address' attribute).
 
     .PARAMETER City
-        The city where the company is located.
+        The city where the company is located (stored as the 'city' attribute).
 
     .PARAMETER State
-        The state/province of the company.
+        The state/province of the company (stored as the 'state' attribute).
 
     .PARAMETER ZipCode
-        The postal code of the company.
+        The postal code of the company (stored as the 'zip_code' attribute).
 
     .PARAMETER Country
-        The country of the company.
+        The country of the company (stored as the 'country' attribute).
 
     .PARAMETER Industry
-        The industry of the company.
+        The industry of the company (stored as the 'industry' attribute).
 
     .PARAMETER NumberOfEmployees
-        The number of employees in the company.
+        The number of employees in the company (stored as the 'number_of_employees' attribute).
 
     .PARAMETER Revenue
-        The annual revenue of the company.
+        The annual revenue of the company (stored as the 'annual_revenue' attribute).
 
     .PARAMETER LinkedContactIds
-        An array of contact IDs to link to the company.
+        An array of contact IDs to link to the company at creation time.
 
     .EXAMPLE
         New-BrevoCompany -Name "Acme Corp" -Email "info@acme.com" -Phone "+1-555-0100" -Website "https://acme.com"
@@ -98,64 +98,71 @@ function New-BrevoCompany
     )
 
     $uri = "/companies"
-    $method = "POST"
 
     $body = @{
         name = $Name
     }
 
+    $attributes = @{}
+
     if ($PSBoundParameters.ContainsKey("Email"))
     {
-        $body.email = $Email
+        $attributes.email = $Email
     }
     if ($PSBoundParameters.ContainsKey("Phone"))
     {
-        $body.phone = $Phone
+        $attributes.phone_number = $Phone
     }
     if ($PSBoundParameters.ContainsKey("Website"))
     {
-        $body.website = $Website
+        $attributes.website = $Website
     }
     if ($PSBoundParameters.ContainsKey("Address"))
     {
-        $body.address = $Address
+        $attributes.address = $Address
     }
     if ($PSBoundParameters.ContainsKey("City"))
     {
-        $body.city = $City
+        $attributes.city = $City
     }
     if ($PSBoundParameters.ContainsKey("State"))
     {
-        $body.state = $State
+        $attributes.state = $State
     }
     if ($PSBoundParameters.ContainsKey("ZipCode"))
     {
-        $body.zipCode = $ZipCode
+        $attributes.zip_code = $ZipCode
     }
     if ($PSBoundParameters.ContainsKey("Country"))
     {
-        $body.country = $Country
+        $attributes.country = $Country
     }
     if ($PSBoundParameters.ContainsKey("Industry"))
     {
-        $body.industry = $Industry
+        $attributes.industry = $Industry
     }
     if ($PSBoundParameters.ContainsKey("NumberOfEmployees"))
     {
-        $body.numberOfEmployees = $NumberOfEmployees
+        $attributes.number_of_employees = $NumberOfEmployees
     }
     if ($PSBoundParameters.ContainsKey("Revenue"))
     {
-        $body.revenue = $Revenue
+        $attributes.annual_revenue = $Revenue
     }
+
+    if ($attributes.Count -gt 0)
+    {
+        $body.attributes = $attributes
+    }
+
     if ($PSBoundParameters.ContainsKey("LinkedContactIds"))
     {
-        $body.linkedContactIds = $LinkedContactIds
+        $body.linkedContactsIds = $LinkedContactIds
     }
 
     $Params = @{
         "URI"    = $uri
-        "Method" = $method
+        "Method" = "POST"
         "Body"   = $body
     }
 
