@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `Invoke-BrevoCall`: Added `DefaultParameterSetName = 'Default'` to resolve parameter set ambiguity when neither `-body` nor `-Form` is provided. Previously, adding named parameter sets for `Body` and `Form` without a default caused PowerShell to throw an error (e.g. when calling `Connect-Brevo` which calls `Invoke-BrevoCall` without a body). The fix ensures `$uri` and `$method` remain available across all parameter sets (Default, Body, Form) so existing callers are unaffected.
+
 ## [0.7.0] - 2026-04-14
 
 ### Fixed
