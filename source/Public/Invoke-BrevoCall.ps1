@@ -49,12 +49,12 @@ function Invoke-BrevoCall {
         - Handles pagination automatically if the API response includes a "count" property.
     
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     [Alias("Invoke-BrevoApiCall", "Invoke-BrevoRestMethod")]
     param (
-        [Parameter(Mandatory = $true, HelpMessage = "The URI of the API call. This should be the relative URI to the base URI provided in Connect-Brevo")]
+        [Parameter(Mandatory = $true, ParameterSetName = "Default", HelpMessage = "The URI of the API call. This should be the relative URI to the base URI provided in Connect-Brevo")]
         [string]$uri,
-        [Parameter(Mandatory = $false, HelpMessage = "The HTTP method to use for the API call")]
+        [Parameter(Mandatory = $false, ParameterSetName = "Default", HelpMessage = "The HTTP method to use for the API call")]
         [ValidateSet("GET", "POST", "PUT", "DELETE", "PATCH") ]
         $method = "GET",
         [Parameter(ParameterSetName = "Body")]
