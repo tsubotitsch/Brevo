@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- New-BrevoContactAttributeMultipleChoiceOption: Renamed property from 'OptionName' to 'Option', help/examples adapted
+
 ## [0.8.0] - 2026-04-17
 
 ### Fixed

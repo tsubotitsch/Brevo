@@ -6,29 +6,23 @@ function Remove-BrevoContactAttributeMultipleChoiceOption
 
     .DESCRIPTION
     The Remove-BrevoContactAttributeMultipleChoiceOption function deletes specified options
-    from a multiple-choice contact attribute. Provide option identifiers or option values
-    depending on how options are represented in your installation. The function sends a
+    from a multiple-choice contact attribute. Provide option values
+    as represented in your installation. The function sends a
     DELETE request to the Brevo API endpoint for multi-choice options.
-
-    .PARAMETER Category
-    Attribute category. Valid values: "normal", "transactional", "category", "calculated", "global".
 
     .PARAMETER Name
     Name of the existing attribute (case-insensitive).
 
-    .PARAMETER OptionIds
-    Array of option ids to remove (preferred if options have numeric ids).
-
-    .PARAMETER Options
-    Array of option values to remove (use if options are identified by their value).
+    .PARAMETER Option
+    Option value to remove. Can be a single value or an array of values.
 
     .EXAMPLE
-    PS C:\> Remove-BrevoContactAttributeMultipleChoiceOption -Category normal -Name Tags -OptionIds 123,124
+    PS C:\> Remove-BrevoContactAttributeMultipleChoiceOption -Name Tags -Option 123
 
-    Removes options with ids 123 and 124 from the "Tags" multiple-choice attribute.
+    Removes option 123 from the "Tags" multiple-choice attribute.
 
     .EXAMPLE
-    PS C:\> Remove-BrevoContactAttributeMultipleChoiceOption -Category normal -Name Tags -Options "OptA","OptB"
+    PS C:\> Remove-BrevoContactAttributeMultipleChoiceOption -Name Tags -Option "OptA","OptB"
 
     Removes options with values "OptA" and "OptB" from the "Tags" attribute.
 
@@ -42,8 +36,9 @@ function Remove-BrevoContactAttributeMultipleChoiceOption
         [Alias('attributeName')]
         [string]$Name,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Name of the existing multiple-choice attribute option that you want to delete')]
-        $OptionName
+        [Parameter(Mandatory = $true, HelpMessage = 'The existing multiple-choice attribute option that you want to delete')]
+        [Alias('OptionName')]
+        $Option
     )
 
     begin
@@ -53,7 +48,7 @@ function Remove-BrevoContactAttributeMultipleChoiceOption
     process
     {
         $results = @()
-        foreach ($opt in $OptionName)
+        foreach ($opt in $Option)
         {
             if ($PSCmdlet.ShouldProcess("multiple-choice/$Name - option $opt", 'Remove option'))
             {
